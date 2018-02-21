@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ui.custom.controls.SchafkopfButton
+            android:id="@+id/button_create_new_game"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Neues Spiel erstellen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrl_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/button_create_new_game"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/lay_edit_payer_names"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txt_header_names"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="10dp"
+
+                            android:text="Spielernamen"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/sep_setup_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/colorSeparator"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <LinearLayout
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:layout_width="0px"
+                            android:layout_height="0px"/>
+
+                        <EditText
+                            android:id="@+id/edt_player_1"
+                            android:nextFocusUp="@id/edt_player_1"
+                            android:nextFocusLeft="@id/edt_player_1"
+                            android:layout_width="200dp"
+                            android:selectAllOnFocus="true"
+                            android:layout_height="wrap_content"
+                            android:maxLength="14"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="10dp"
+                            android:ems="10"
+                            android:hint="Name Spieler 1"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp"
+                            app:layout_constraintHorizontal_bias="0.25"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_header_names" />
+
+                        <EditText
+                            android:id="@+id/edt_player_2"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:maxLength="14"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="10dp"
+                            android:ems="10"
+                            android:hint="Name Spieler 2"
+                            android:inputType="textPersonName"
+                            android:selectAllOnFocus="true"
+                            android:textSize="16sp"
+                            app:layout_constraintHorizontal_bias="0.25"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_player_1" />
+
+                        <EditText
+                            android:id="@+id/edt_player_3"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:maxLength="14"
+                            android:layout_marginTop="10dp"
+                            android:selectAllOnFocus="true"
+                            android:ems="10"
+                            android:hint="Name Spieler 3"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp"
+                            app:layout_constraintHorizontal_bias="0.25"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_player_2" />
+
+                        <EditText
+                            android:id="@+id/edt_player_4"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="14"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="10dp"
+                            android:ems="10"
+                            android:hint="Name Spieler 4"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp"
+                            app:layout_constraintHorizontal_bias="0.25"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_player_3" />
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:id="@+id/lay_select_games"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lay_edit_payer_names">
+
+                        <TextView
+                            android:id="@+id/txt_header_game"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Spiele"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_player_4" />
+
+                        <View
+                            android:id="@+id/sep_setup_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/colorSeparator"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/cbx_normal_game"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"
+                                android:checked="false"
+                                android:text="Sauspiel" />
+
+                            <EditText
+                                android:id="@+id/edt_normal_game"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:maxLength="4"
+                                android:selectAllOnFocus="true"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:text="10" />
+
+                            <TextView
+                                android:id="@+id/lbl_cent_1"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="cent"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/cbx_solo"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"
+                                android:text="Solo/Wenz" />
+
+                            <EditText
+                                android:id="@+id/edt_solo"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:selectAllOnFocus="true"
+                                android:maxLength="4"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:text="20" />
+
+                            <TextView
+                                android:id="@+id/lbl_cent_2"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="cent"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:id="@+id/lay_select_global_values"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lay_select_games">
+
+                        <TextView
+                            android:id="@+id/txt_header_additional_settings"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Tarife"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_solo" />
+
+                        <View
+                            android:id="@+id/sep_setup_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/colorSeparator"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_schneider"
+                                android:layout_width="188dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:layout_marginLeft="12dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Schneider"
+                                android:textAlignment="textStart" />
+
+                            <EditText
+                                android:id="@+id/edt_schneider"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:maxLength="4"
+                                android:selectAllOnFocus="true"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:text="5" />
+
+                            <TextView
+                                android:id="@+id/lbl_cent_3"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="cent"
+                                android:textAlignment="center" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_schwarz"
+                                android:layout_width="188dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:textColor="@color/black"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Schwarz"
+                                android:textAlignment="textStart" />
+
+                            <EditText
+                                android:id="@+id/edt_schwarz"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:maxLength="4"
+                                android:selectAllOnFocus="true"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:text="5" />
+
+                            <TextView
+                                android:id="@+id/lbl_cent_4"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="cent"
+                                android:textAlignment="center" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_lauf"
+                                android:layout_width="188dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+
+                                android:text="Pro Lauf"
+                                android:textAlignment="textStart" />
+
+                            <EditText
+                                android:id="@+id/edt_lauf"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:maxLength="4"
+                                android:ems="10"
+                                android:selectAllOnFocus="true"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:text="5" />
+
+                            <TextView
+                                android:id="@+id/lbl_cent_5"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="cent"
+                                android:textAlignment="center" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

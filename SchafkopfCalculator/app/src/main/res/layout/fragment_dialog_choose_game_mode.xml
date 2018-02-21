@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Spiel wählen"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorSeparator"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+
+        <ui.custom.controls.SchafkopfButton
+            android:id="@+id/btn_normal_game"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_height="40dp"
+            android:text="Sauspiel" />
+
+        <ui.custom.controls.SchafkopfButton
+            android:id="@+id/btn_solo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Solo/Wenz" />
+    </LinearLayout>
+
+</LinearLayout>
