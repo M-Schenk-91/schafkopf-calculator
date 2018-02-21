@@ -1,0 +1,1 @@
+# schafkopf-calculator
