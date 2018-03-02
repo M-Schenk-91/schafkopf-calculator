@@ -298,6 +298,26 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
                     listener.onPhaseCompleted(AddNewRoundDialogFragment.PHASE_CHOOSE_GAME_MODE, true);
                 }
             });
+
+            SchafkopfButton btnWenz = (SchafkopfButton) view.findViewById(R.id.btn_wenz);
+            btnWenz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GameMode mode = GameController.getInstance().getActiveGame().getSettings().getGameMode(GameController.ID_GAME_MODE_WENZ);
+                    listener.onGameModeChanged(mode);
+                    listener.onPhaseCompleted(AddNewRoundDialogFragment.PHASE_CHOOSE_GAME_MODE, true);
+                }
+            });
+
+            SchafkopfButton btnRamsch = (SchafkopfButton) view.findViewById(R.id.btn_ramsch);
+            btnRamsch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GameMode mode = GameController.getInstance().getActiveGame().getSettings().getGameMode(GameController.ID_GAME_MODE_RAMSCH);
+                    listener.onGameModeChanged(mode);
+                    listener.onPhaseCompleted(AddNewRoundDialogFragment.PHASE_CHOOSE_GAME_MODE, true);
+                }
+            });
         }
     }
 

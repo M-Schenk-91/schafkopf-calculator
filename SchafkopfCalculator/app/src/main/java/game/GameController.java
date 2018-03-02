@@ -14,7 +14,11 @@ public class GameController {
     private static GameController instance;
 
     public static final String ID_GAME_MODE_DEFAULT = "Sauspiel";
+    //TODO id auf solo umstellen, alte spiele müssen noch geladen werden können
     public static final String ID_GAME_MODE_SOLO = "Solo/Wenz";
+    public static final String ID_GAME_MODE_WENZ = "Wenz";
+    public static final String ID_GAME_MODE_RAMSCH = "Ramsch";
+
 
     private HashMap<String, GameMode> hmAvailableModes = new HashMap<>();
     private ArrayList<IGameListener> listeners = new ArrayList<>();
@@ -31,6 +35,8 @@ public class GameController {
     private void initGameModes() {
         hmAvailableModes.put(ID_GAME_MODE_DEFAULT, new GameMode(ID_GAME_MODE_DEFAULT, 10, false));
         hmAvailableModes.put(ID_GAME_MODE_SOLO, new GameMode(ID_GAME_MODE_SOLO, 20, true));
+        hmAvailableModes.put(ID_GAME_MODE_WENZ, new GameMode(ID_GAME_MODE_WENZ, 20, true));
+        hmAvailableModes.put(ID_GAME_MODE_RAMSCH, new GameMode(ID_GAME_MODE_RAMSCH, 10, true));
     }
 
     public static GameController getInstance() {
