@@ -10,22 +10,28 @@ import ui.UiUtils;
 
 public class GameRound {
 
-    private final int numPlayers;
+    private int numPlayers;
     private Game game = null;
-    private GameMode gameMode = GameController.getInstance().getHmAvailableModes().get(GameController.ID_GAME_MODE_DEFAULT);
+    private GameMode gameMode;
     private boolean[] lstWinners = null;
     private boolean schneider = false, schwarz = false;
     private int multiplicator = 1;
     private int[] lstScoreChangesPerPlayer;
     private int lauf;
 
+    public GameRound(){
+        gameMode = GameController.getInstance().getHmAvailableModes().get(GameController.ID_GAME_MODE_DEFAULT);
+    }
+
     public GameRound(Game game) {
+        this();
         this.numPlayers = game.getLstPlayers().size();
         this.game = game;
         lstScoreChangesPerPlayer = new int[numPlayers];
     }
 
     public GameRound(int numPlayers) {
+        this();
         this.numPlayers = numPlayers;
         lstScoreChangesPerPlayer = new int[numPlayers];
     }

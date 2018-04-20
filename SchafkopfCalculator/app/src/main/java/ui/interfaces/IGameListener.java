@@ -8,7 +8,7 @@ import game.Game;
 
 public interface IGameListener {
 
-    void onGameCreated(Game game, boolean newGame, boolean cachedGame);
+    void onGameCreated(Game game, boolean newGame, boolean cachedGame, String loadingMessage);
 
     void onGameRoundsChanged(Game game);
 }

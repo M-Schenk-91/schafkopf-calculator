@@ -14,8 +14,7 @@ public class GameController {
     private static GameController instance;
 
     public static final String ID_GAME_MODE_DEFAULT = "Sauspiel";
-    //TODO id auf solo umstellen, alte spiele müssen noch geladen werden können
-    public static final String ID_GAME_MODE_SOLO = "Solo/Wenz";
+    public static final String ID_GAME_MODE_SOLO = "Solo";
     public static final String ID_GAME_MODE_WENZ = "Wenz";
     public static final String ID_GAME_MODE_RAMSCH = "Ramsch";
 
@@ -55,7 +54,7 @@ public class GameController {
 
     private void onNewGameCreated(Game game, boolean newGame) {
         for (IGameListener listener : listeners) {
-            listener.onGameCreated(game, newGame, false);
+            listener.onGameCreated(game, newGame, false, "");
         }
     }
 

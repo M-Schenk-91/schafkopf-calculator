@@ -100,7 +100,7 @@ public class IOManager {
         return fileSettings;
     }
 
-    public Game loadGame(String dirName) {
+    public Game loadGame(String dirName, boolean updateSavedGame) {
         Game result = null;
 
         File internalStorage = context.getFilesDir();
@@ -149,13 +149,33 @@ public class IOManager {
         }
 
         boolean cached = dirName.equals(NAME_DIRECTORY_CURRENTLY_CACHED_GAME);
-        onGameLoaded(result, cached);
+
+        String loadingMessage = "";
+
+        if(updateSavedGame){
+            loadingMessage = updateSavedGame(result);
+        }
+
+        onGameLoaded(result, cached, loadingMessage);
         return result;
     }
 
-    private void onGameLoaded(Game result, boolean cached) {
+    private String updateSavedGame(Game result) {
+        SaveGameUpdater updater = SaveGameUpdater.getInstance();
+
+        try {
+            updater.update(result);
+        } catch (DataException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+
+        return "";
+    }
+
+    private void onGameLoaded(Game result, boolean cached, String loadingMessage) {
         for (IGameListener l : listeners) {
-            l.onGameCreated(result, false, cached);
+            l.onGameCreated(result, false, cached, loadingMessage);
         }
     }
 }

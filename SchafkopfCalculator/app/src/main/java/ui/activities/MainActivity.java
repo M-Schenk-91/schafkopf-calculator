@@ -16,6 +16,7 @@ import game.Game;
 import game.GameController;
 import game.GameSettings;
 import io.IOManager;
+import io.SaveGameUpdater;
 import ui.custom.SchafkopfActivity;
 import ui.FragmentController;
 import ui.fragments.dialog.LoadGameDialogFragment;
@@ -34,6 +35,8 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
     private boolean paused = false;
+    private SaveGameUpdater saveGameUpdater;
+    private boolean cachedGameUpdated = false;
 
 
     @Override
@@ -43,6 +46,7 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
 
         findControls();
         init();
+        initUpdates();
         listeners();
     }
 
@@ -64,6 +68,11 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
 
         MenuItem itemGame = navigationView.getMenu().getItem(FragmentController.FRAGMENT_GAME);
         itemGame.setEnabled(gameAvailable);
+    }
+
+    private void initUpdates() {
+        saveGameUpdater = SaveGameUpdater.getInstance();
+        saveGameUpdater.setGameModeUpdate(mgrGame.getHmAvailableModes());
     }
 
     @Override
@@ -142,9 +151,16 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
 
 
     @Override
-    public void onGameCreated(Game game, boolean newGame, boolean cached) {
-        gameAvailable = true;
+    public void onGameCreated(Game game, boolean newGame, boolean cached, String loadingMessage) {
 
+        if(game == null){
+            showToast(getResources().getString(R.string.loadingError) + ": " + loadingMessage);
+            return;
+        }
+
+        if(cached) cachedGameUpdated = true;
+
+        gameAvailable = true;
         mgrGame.setActiveGame(game);
 
         if (newGame || game.getLstRounds().size() > 0) {
@@ -203,7 +219,7 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
 
     private void loadGame(boolean cachedGame) {
         if (cachedGame) {
-            mgrIO.loadGame(IOManager.NAME_DIRECTORY_CURRENTLY_CACHED_GAME);
+            mgrIO.loadGame(IOManager.NAME_DIRECTORY_CURRENTLY_CACHED_GAME, !cachedGameUpdated);
         } else {
             if (mgrIO.savedGamesExisting()) {
                 LoadGameDialogFragment loadGameDialogFragment = new LoadGameDialogFragment();

@@ -80,7 +80,7 @@ public class LoadGameDialogFragment extends DialogFragment {
     private void loadSelectedGame() {
         IOManager mgr = new IOManager(activity.getApplicationContext());
         mgr.addGameListener((MainActivity) activity);
-        mgr.loadGame(fileToLoad);
+        mgr.loadGame(fileToLoad, true);
     }
 
     private class LoadingAdapter extends ArrayAdapter<String> {

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,6 +168,7 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
                 if(newPhase){
                     //Handle condition for autoProceed (count of selected players in fragment)
                     int autoProceedCondition = 2;
+
                     if(gameRoundResult.getGameMode().isSolo()) autoProceedCondition = activeGame.getLstPlayers().size() - 1;
                     ((ChooseWinnerFragment) frChooseWinner).setProceedCondition(autoProceedCondition);
                 }else{

@@ -195,7 +195,7 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
     }
 
     @Override
-    public void onGameCreated(Game game, boolean newGame, boolean b) {
+    public void onGameCreated(Game game, boolean newGame, boolean b, String loadingMessage) {
 
     }
 
