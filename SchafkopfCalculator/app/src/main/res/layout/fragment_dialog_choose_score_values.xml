@@ -71,33 +71,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
 
-            <ui.custom.controls.SchafkopfToggleButton
+            <ui.custom.controls.fw.SchafkopfToggleButton
                 android:id="@+id/btn_frei"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="5dp"
 
-                android:layout_weight="1"
                 android:text="Frei" />
 
-            <ui.custom.controls.SchafkopfToggleButton
+            <ui.custom.controls.fw.SchafkopfToggleButton
                 android:id="@+id/btn_schneider"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="5dp"
 
-                android:layout_weight="1"
                 android:text="Schneider" />
 
-            <ui.custom.controls.SchafkopfToggleButton
+            <ui.custom.controls.fw.SchafkopfToggleButton
                 android:id="@+id/btn_schwarz"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_weight="1"
                 android:text="Schwarz" />
+
+            <ui.custom.controls.fw.SchafkopfToggleButton
+                android:id="@+id/btn_jungfrau"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:maxHeight="40dp"
+                android:text="Jungfrau (Doppeln)"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>

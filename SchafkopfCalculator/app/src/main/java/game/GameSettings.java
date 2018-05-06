@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class GameSettings {
 
     public static final int DEFAULT_COUNT_MAX_PLAYERS = 4;
-    public static final int DEFAULT_MAX_ROUND_MULTIPLICATOR = 1024;
+    public static final int DEFAULT_MAX_ROUND_MULTIPLICATOR = 1048576; //2^20
 
     private int numPlayers = DEFAULT_COUNT_MAX_PLAYERS;
     private int maxRoundMultiplicator = DEFAULT_MAX_ROUND_MULTIPLICATOR;

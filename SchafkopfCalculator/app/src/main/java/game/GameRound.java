@@ -1,5 +1,6 @@
 package game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import ui.UiUtils;
@@ -8,7 +9,7 @@ import ui.UiUtils;
  * Created by Matthias on 13.01.2018.
  */
 
-public class GameRound {
+public class GameRound implements Serializable {
 
     private int numPlayers;
     private Game game = null;
@@ -18,6 +19,7 @@ public class GameRound {
     private int multiplicator = 1;
     private int[] lstScoreChangesPerPlayer;
     private int lauf;
+    private boolean jungfrau = false;
 
     public GameRound(){
         gameMode = GameController.getInstance().getHmAvailableModes().get(GameController.ID_GAME_MODE_DEFAULT);
@@ -49,10 +51,17 @@ public class GameRound {
             result += UiUtils.multiplicatorToDoubleUps(getMultiplicator()) + " mal gedoppelt";
         }
 
+        if(jungfrau){
+            result += separator;
+            result += "Jungfrau";
+        }
+
         if(getLauf() > 0){
             result += separator;
             result += getLauf() + " Lauf";
         }
+
+        if(gameMode.getName().equals(GameController.ID_GAME_MODE_RAMSCH)) return result;
 
         if(isSchneider()){
             result += separator;
@@ -157,7 +166,10 @@ public class GameRound {
             }
         }
 
-        result *= multiplicator;
+        int multiply = multiplicator;
+        if(jungfrau) multiply *= 2;
+
+        result *= multiply;
 
         return result;
     }
@@ -192,5 +204,9 @@ public class GameRound {
 
     public void setValueChanges(int[] valueChanges) {
         this.lstScoreChangesPerPlayer = valueChanges;
+    }
+
+    public void setJungfrau(boolean jungfrau) {
+        this.jungfrau = jungfrau;
     }
 }

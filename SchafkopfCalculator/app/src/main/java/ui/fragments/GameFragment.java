@@ -19,7 +19,8 @@ import game.GameController;
 import game.GameRound;
 import game.GameSettings;
 import ui.AppColors;
-import ui.custom.controls.SchafkopfButton;
+import ui.custom.controls.DoubleUpButton;
+import ui.custom.controls.fw.SchafkopfButton;
 import ui.custom.SchafkopfFragment;
 import ui.fragments.dialog.AddNewRoundDialogFragment;
 import ui.interfaces.IGameFragmentListener;
@@ -35,7 +36,8 @@ import ui.UiUtils;
 public class GameFragment extends SchafkopfFragment implements IGameListener{
 
     private TextView lblScorePlayer1, lblScorePlayer2, lblScorePlayer3, lblScorePlayer4, lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4;
-    private SchafkopfButton btnAddRound, btnDoubleUp;
+    private SchafkopfButton btnAddRound;
+    private DoubleUpButton btnDoubleUp;
     private ListView lstViewRounds;
     private boolean uiCreated = false;
     private ArrayList<IGameFragmentListener> lstGameFragmentListeners = new ArrayList<>();
@@ -92,6 +94,8 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
             }
         });
 
+        //#OLD
+        /*
         btnDoubleUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,9 +111,11 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
                 }
             }
         });
+        */
     }
 
-
+    //#OLD
+    /*
     private void doubleUp() {
         if (roundMultiplicator < game.getSettings().getMaxRoundMultiplicator()) {
             roundMultiplicator *= 2;
@@ -117,9 +123,12 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
             roundMultiplicator = 1;
         }
     }
-
+*/
 
     private void showAddRoundDialog() {
+        roundMultiplicator = (int) Math.pow(2, btnDoubleUp.getDoubleUps());
+
+
         DialogFragment newFragment = new AddNewRoundDialogFragment();
 
         Bundle bundle = new Bundle();
@@ -143,7 +152,10 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
         updateTotalScore(game);
 
         roundMultiplicator = 1;
-        btnDoubleUp.setText("Doppeln");
+
+        int maxMultiplicator = game.getSettings().getMaxRoundMultiplicator();
+        btnDoubleUp.setMaxDoubleUps(UiUtils.multiplicatorToDoubleUps(maxMultiplicator));
+        btnDoubleUp.clearDoubleUps();
     }
 
     private void onRoundAdded(GameRound round) {
@@ -185,7 +197,7 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
         lblScorePlayer4 = (TextView) view.findViewById(R.id.lbl_score_player_4);
         lstLblsPlayerScores.add(lblScorePlayer4);
 
-        btnDoubleUp = (SchafkopfButton) view.findViewById(R.id.btn_double_up);
+        btnDoubleUp = (DoubleUpButton) view.findViewById(R.id.btn_double);
         btnAddRound = (SchafkopfButton) view.findViewById(R.id.btn_add_round);
 
         lstViewRounds = (ListView) view.findViewById(R.id.lst_rounds);

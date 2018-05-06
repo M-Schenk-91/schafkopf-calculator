@@ -20,7 +20,7 @@ import game.Game;
 import game.GameController;
 import game.GameMode;
 import game.GameSettings;
-import ui.custom.controls.SchafkopfButton;
+import ui.custom.controls.fw.SchafkopfButton;
 import ui.custom.SchafkopfFragment;
 import ui.interfaces.IGameSettingsFragmentListener;
 
@@ -208,12 +208,12 @@ public class GameSetupFragment extends SchafkopfFragment {
                     break;
                 case GameController.ID_GAME_MODE_WENZ:
                     GameMode modeWenz = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_WENZ);
-                    //modeWenz.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
+                    modeWenz.setValue(checkValidityAndGetIntValue(edtSolo.getText().toString()));
                     modes.add(modeWenz);
                     break;
                 case GameController.ID_GAME_MODE_RAMSCH:
                     GameMode modeRamsch = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_RAMSCH);
-                    //modeRamsch.setValue(checkValidityAndGetIntValue(edtSolo.getText().toString()));
+                    modeRamsch.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
                     modes.add(modeRamsch);
                     break;
             }

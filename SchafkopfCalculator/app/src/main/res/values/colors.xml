@@ -15,4 +15,7 @@
     <color name="colorButtonText">@color/white</color>
     <color name="colorToggleButtonSelected">@color/colorPrimaryDark</color>
 
+    <color name="colorNegative">#800000</color>
+
+
 </resources>

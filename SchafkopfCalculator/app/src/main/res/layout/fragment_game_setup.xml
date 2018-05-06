@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ui.custom.controls.SchafkopfButton
+        <ui.custom.controls.fw.SchafkopfButton
             android:id="@+id/button_create_new_game"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -219,7 +219,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_weight="1"
                                 android:checked="false"
-                                android:text="Sauspiel" />
+                                android:text="Sauspiel/Ramsch" />
 
                             <EditText
                                 android:id="@+id/edt_normal_game"

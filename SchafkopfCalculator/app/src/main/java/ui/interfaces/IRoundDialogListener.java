@@ -9,9 +9,9 @@ import ui.fragments.dialog.AddNewRoundDialogFragment;
 
 public interface IRoundDialogListener {
     void onPhaseCompleted(int finishedPhase, boolean proceed);
-
     void onGameModeChanged(GameMode mode);
     void onWinnersChanged(boolean[] winners);
     void onLaufChanged(int lauf);
+    void onJungfrauChanged(boolean jungfrau);
     void onRoundResultChanged(AddNewRoundDialogFragment.ChooseScoreValuesFragment.RoundResult result);
 }

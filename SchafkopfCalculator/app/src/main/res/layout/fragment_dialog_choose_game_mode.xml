@@ -31,28 +31,28 @@
         android:layout_marginRight="10dp"
         >
 
-        <ui.custom.controls.SchafkopfButton
+        <ui.custom.controls.fw.SchafkopfButton
             android:id="@+id/btn_normal_game"
             android:layout_width="match_parent"
             android:layout_marginBottom="5dp"
             android:layout_height="40dp"
             android:text="Sauspiel" />
 
-        <ui.custom.controls.SchafkopfButton
+        <ui.custom.controls.fw.SchafkopfButton
             android:id="@+id/btn_solo"
             android:layout_width="match_parent"
             android:layout_marginBottom="5dp"
             android:layout_height="40dp"
             android:text="Solo" />
 
-        <ui.custom.controls.SchafkopfButton
+        <ui.custom.controls.fw.SchafkopfButton
             android:id="@+id/btn_wenz"
             android:layout_width="match_parent"
             android:layout_marginBottom="5dp"
             android:layout_height="40dp"
             android:text="Wenz" />
 
-        <ui.custom.controls.SchafkopfButton
+        <ui.custom.controls.fw.SchafkopfButton
             android:id="@+id/btn_ramsch"
             android:layout_width="match_parent"
             android:layout_marginBottom="5dp"
