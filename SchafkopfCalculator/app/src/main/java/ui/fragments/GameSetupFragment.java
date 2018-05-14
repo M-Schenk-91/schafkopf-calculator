@@ -216,6 +216,11 @@ public class GameSetupFragment extends SchafkopfFragment {
                     modeRamsch.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
                     modes.add(modeRamsch);
                     break;
+                case GameController.ID_GAME_MODE_CUSTOM:
+                    GameMode modeCustom = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_CUSTOM);
+                    modeCustom.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
+                    modes.add(modeCustom);
+                    break;
             }
         }
 

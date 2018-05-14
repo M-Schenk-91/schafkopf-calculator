@@ -17,6 +17,8 @@ public class GameController {
     public static final String ID_GAME_MODE_SOLO = "Solo";
     public static final String ID_GAME_MODE_WENZ = "Wenz";
     public static final String ID_GAME_MODE_RAMSCH = "Ramsch";
+    public static final String ID_GAME_MODE_CUSTOM = "Manuelle Eingabe";
+
 
 
     private HashMap<String, GameMode> hmAvailableModes = new HashMap<>();
@@ -36,6 +38,7 @@ public class GameController {
         hmAvailableModes.put(ID_GAME_MODE_SOLO, new GameMode(ID_GAME_MODE_SOLO, 20, true));
         hmAvailableModes.put(ID_GAME_MODE_WENZ, new GameMode(ID_GAME_MODE_WENZ, 20, true));
         hmAvailableModes.put(ID_GAME_MODE_RAMSCH, new GameMode(ID_GAME_MODE_RAMSCH, 10, true));
+        hmAvailableModes.put(ID_GAME_MODE_CUSTOM, new GameMode(ID_GAME_MODE_CUSTOM, 10, false));
     }
 
     public static GameController getInstance() {

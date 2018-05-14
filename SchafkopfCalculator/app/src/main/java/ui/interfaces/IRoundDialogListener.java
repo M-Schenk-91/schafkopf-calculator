@@ -2,6 +2,7 @@ package ui.interfaces;
 
 import game.GameMode;
 import ui.fragments.dialog.AddNewRoundDialogFragment;
+import ui.fragments.dialog.ChooseScoreValuesFragment;
 
 /**
  * Created by Matthias on 26.01.2018.
@@ -13,5 +14,5 @@ public interface IRoundDialogListener {
     void onWinnersChanged(boolean[] winners);
     void onLaufChanged(int lauf);
     void onJungfrauChanged(boolean jungfrau);
-    void onRoundResultChanged(AddNewRoundDialogFragment.ChooseScoreValuesFragment.RoundResult result);
+    void onRoundResultChanged(ChooseScoreValuesFragment.RoundResult result);
 }
