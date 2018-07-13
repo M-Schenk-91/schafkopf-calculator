@@ -85,6 +85,17 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    @Override
+    public void onPause() {
+        if(AddNewRoundDialogFragment.this != null){
+            if(AddNewRoundDialogFragment.this.getDialog() != null){
+                AddNewRoundDialogFragment.this.getDialog().cancel();
+            }
+        }
+
+        super.onPause();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
