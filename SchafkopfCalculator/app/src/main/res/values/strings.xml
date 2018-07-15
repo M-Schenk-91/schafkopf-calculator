@@ -28,5 +28,7 @@
     <string name="load_game">Spiel laden</string>
     <string name="loadingError">Spiel konnte nicht geladen werden</string>
     <string name="txt_jungfrau">Jungfrau (Doppeln)</string>
+   <string name="title_statistics">Statistik</string>
+   <string name="descRoundsPlayed">Gespielte Runden:</string>
 
 </resources>

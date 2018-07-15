@@ -1,5 +1,6 @@
 package ui.activities;
 
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,10 +16,12 @@ import com.schenk.matthias.schafkopfcalculator.R;
 import game.Game;
 import game.GameController;
 import game.GameSettings;
+import game.Statistics;
 import io.IOManager;
 import io.SaveGameUpdater;
 import ui.custom.SchafkopfActivity;
 import ui.FragmentController;
+import ui.fragments.StatisticsFragment;
 import ui.fragments.dialog.LoadGameDialogFragment;
 import ui.fragments.dialog.SaveGameDialogFragment;
 import ui.fragments.GameSetupFragment;
@@ -61,7 +64,7 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
         drawerToggle = setupDrawerToggle();
         drawerLayout.addDrawerListener(drawerToggle);
 
-        mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, FragmentController.TRANSITION_NONE);
+        mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, false);
         MenuItem itemSetup = navigationView.getMenu().getItem(FragmentController.FRAGMENT_GAME_SETUP);
         setTitle(itemSetup.getTitle());
         setMenuItemChecked(itemSetup);
@@ -113,6 +116,12 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
     private void listeners() {
         mgrGame.addGameListener(this);
         mgrIO.addGameListener(this);
+
+        mgrGame.addGameListener(Statistics.INSTANCE);
+        mgrIO.addGameListener(Statistics.INSTANCE);
+
+        Statistics.INSTANCE.addStatisticsListener((StatisticsFragment) mgrFragments.getFragment(FragmentController.FRAGMENT_STATISTICS));
+
         ((GameSetupFragment) mgrFragments.getFragment(FragmentController.FRAGMENT_GAME_SETUP)).addGameSettingsListener(this);
 
         navigationView.setNavigationItemSelectedListener(
@@ -121,17 +130,19 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.new_game:
-                                mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, FragmentController.TRANSITION_IN_LEFT_TO_RIGHT);
+                                mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, true);
                                 break;
                             case R.id.game_overwiew:
-                                mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, FragmentController.TRANSITION_IN_RIGHT_TO_LEFT);
+                                mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, true);
+                                break;
+                            case R.id.statistics:
+                                mgrFragments.setFragment(FragmentController.FRAGMENT_STATISTICS, true);
                                 break;
                         }
 
                         setMenuItemChecked(menuItem);
                         setTitle(menuItem.getTitle());
                         drawerLayout.closeDrawers();
-
                         return true;
                     }
                 });
@@ -173,7 +184,7 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
     }
 
     private void switchToGameFragment() {
-        mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, FragmentController.TRANSITION_IN_RIGHT_TO_LEFT);
+        mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, true);
         MenuItem item = navigationView.getMenu().getItem(FragmentController.FRAGMENT_GAME);
         item.setEnabled(gameAvailable);
         setTitle(item.getTitle());

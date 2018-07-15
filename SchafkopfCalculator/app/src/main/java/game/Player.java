@@ -1,10 +1,12 @@
 package game;
 
+import java.io.Serializable;
+
 /**
  * Created by Matthias on 13.01.2018.
  */
 
-public class Player {
+public class Player implements Serializable {
 
     private int num;
     private String name = "Spieler";

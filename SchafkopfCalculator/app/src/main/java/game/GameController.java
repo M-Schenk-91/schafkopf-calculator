@@ -19,8 +19,6 @@ public class GameController {
     public static final String ID_GAME_MODE_RAMSCH = "Ramsch";
     public static final String ID_GAME_MODE_CUSTOM = "Manuelle Eingabe";
 
-
-
     private HashMap<String, GameMode> hmAvailableModes = new HashMap<>();
     private ArrayList<IGameListener> listeners = new ArrayList<>();
     private static Game activeGame;

@@ -1,10 +1,12 @@
 package game;
 
+import java.io.Serializable;
+
 /**
  * Created by Matthias on 13.01.2018.
  */
 
-public class GameMode {
+public class GameMode implements Serializable {
 
     private String name = "Spielmodus";
     private int value = 0;

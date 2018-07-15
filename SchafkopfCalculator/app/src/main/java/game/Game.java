@@ -1,12 +1,13 @@
 package game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Matthias on 11.01.2018.
  */
 
-public class Game {
+public class Game implements Serializable {
 
     private ArrayList<Player> lstPlayers = new ArrayList<>();
     private ArrayList<GameRound> lstRounds = new ArrayList<>();

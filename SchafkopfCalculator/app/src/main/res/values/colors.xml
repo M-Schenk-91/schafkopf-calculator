@@ -10,7 +10,7 @@
     <color name="colorAccent">#39796b</color>
 
     <color name="colorBackground">@color/white</color>
-    <color name="colorSeparator">@color/black</color>
+    <color name="colorSeparator">@color/gray</color>
 
     <color name="colorButtonText">@color/white</color>
     <color name="colorToggleButtonSelected">@color/colorPrimaryDark</color>

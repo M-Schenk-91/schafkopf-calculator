@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_subject_black_24dp"
         android:title="@string/title_game" />
 
+    <item
+       android:id="@+id/statistics"
+       android:icon="@drawable/ic_show_chart_black_24dp"
+       android:title="@string/title_statistics" />
+
 </menu>
