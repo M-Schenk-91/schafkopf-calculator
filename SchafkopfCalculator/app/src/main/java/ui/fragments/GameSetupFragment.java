@@ -98,6 +98,8 @@ public class GameSetupFragment extends SchafkopfFragment {
                 cbxSolo.setChecked(true);
             }
         });
+
+
     }
 
     private void openConfirmationDialog() {
