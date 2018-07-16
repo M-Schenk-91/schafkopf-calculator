@@ -71,6 +71,7 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
 
         MenuItem itemGame = navigationView.getMenu().getItem(FragmentController.FRAGMENT_GAME);
         itemGame.setEnabled(gameAvailable);
+
     }
 
     private void initUpdates() {

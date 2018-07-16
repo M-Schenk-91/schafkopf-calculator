@@ -1,5 +1,6 @@
 package game
 
+import android.util.Log
 import com.github.mikephil.charting.utils.Utils.init
 import com.schenk.matthias.schafkopfcalculator.R.menu.settings
 import ui.interfaces.IGameListener
@@ -29,11 +30,11 @@ object Statistics : Serializable, IGameListener {
    var customGamesPercent: Int = 0;
 
    var winningCountsPerPlayer: Array<Int> = arrayOf(0,0,0,0)
-   var averageScorePerPlayer: Array<Int> = arrayOf(0,0,0,0)
+   var averageScorePerPlayer: Array<Double> = arrayOf(0.00,0.00,0.00,0.00)
 
 
    init {
-
+      Log.d("Statistics", "Statistics initialized")
    }
 
    fun addStatisticsListener(listener: IStatisticsListener) {
@@ -64,7 +65,11 @@ object Statistics : Serializable, IGameListener {
    }
 
    private fun updateAverageScore() {
-      game.lstPlayers.forEachIndexed { index, player ->   averageScorePerPlayer[index] = player.score / roundsPlayed}
+      game.lstPlayers.forEachIndexed { index, player ->
+
+         if(roundsPlayed > 0){
+            averageScorePerPlayer[index] = (player.score.toDouble() /100) / roundsPlayed}
+      }
    }
 
    private fun updateWinnersCounter(round: GameRound?) {
@@ -84,7 +89,7 @@ object Statistics : Serializable, IGameListener {
       customGames = 0
 
       winningCountsPerPlayer = arrayOf(0,0,0,0)
-      averageScorePerPlayer = arrayOf(0,0,0,0)
+      averageScorePerPlayer = arrayOf(0.00,0.00,0.00,0.00)
    }
 
    private fun updateGameTypePercentages() {

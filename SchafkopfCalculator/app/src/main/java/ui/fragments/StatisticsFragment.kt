@@ -1,5 +1,6 @@
 package ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +27,10 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.schenk.matthias.schafkopfcalculator.R.id.chartStatisticsGamesPlayed
+import ui.AppColors
 import ui.UiUtils
 
-var animationMillis: Int = 1000
+var animationMillis: Int = 500
 
 
 
@@ -69,7 +71,7 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
       }
 
       var dataset = BarDataSet(entries, "LABEL")
-      dataset.colors = ColorTemplate.LIBERTY_COLORS.toMutableList()
+      dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
       var pieData = BarData(dataset)
@@ -124,7 +126,7 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
       }
 
       var dataset = BarDataSet(entries, "LABEL")
-      dataset.colors = ColorTemplate.LIBERTY_COLORS.toMutableList()
+      dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
       var pieData = BarData(dataset)
@@ -184,7 +186,7 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
          if(Statistics.customGames > 0) entries.add(PieEntry(Statistics.customGames.toFloat(), "Manuelle Eingabe"))
 
          var dataset = PieDataSet(entries, "LABEL")
-         dataset.colors = ColorTemplate.LIBERTY_COLORS.toMutableList()
+         dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
          dataset.valueTextSize = 16F
 
          var pieData = PieData(dataset)
@@ -195,7 +197,7 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
                   dataSetIndex: Int,
                   viewPortHandler: ViewPortHandler?
             ): String {
-               return value.toInt().toString()
+               return value.toInt().toString() + " %"
             }
 
          })
@@ -205,10 +207,13 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
          chartStatisticsGamesPlayed.setCenterTextSize(30F)
          chartStatisticsGamesPlayed.setNoDataText(context.getString(R.string.chart_no_games))
          chartStatisticsGamesPlayed.setDrawEntryLabels(true)
-         chartStatisticsGamesPlayed.legend.isEnabled = false;
+       chartStatisticsGamesPlayed.setUsePercentValues(true)
+       chartStatisticsGamesPlayed.setEntryLabelColor(Color.BLACK)
+       chartStatisticsGamesPlayed.setEntryLabelTextSize(10f)
+         chartStatisticsGamesPlayed.legend.isEnabled = false
          chartStatisticsGamesPlayed.description.isEnabled = false
-         chartStatisticsGamesPlayed.holeRadius = 40.toFloat()
-         chartStatisticsGamesPlayed.transparentCircleRadius = 45.toFloat()
+         chartStatisticsGamesPlayed.holeRadius = 30.toFloat()
+         chartStatisticsGamesPlayed.transparentCircleRadius = 35.toFloat()
          chartStatisticsGamesPlayed.animateXY(animationMillis, animationMillis)
          chartStatisticsGamesPlayed.data = pieData
    }
