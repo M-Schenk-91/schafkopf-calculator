@@ -1,5 +1,7 @@
 package game
 
+import com.github.mikephil.charting.utils.Utils.init
+import com.schenk.matthias.schafkopfcalculator.R.menu.settings
 import ui.interfaces.IGameListener
 import ui.interfaces.IStatisticsListener
 import java.io.Serializable
@@ -26,6 +28,10 @@ object Statistics : Serializable, IGameListener {
    var customGames: Int = 0;
    var customGamesPercent: Int = 0;
 
+   var winningCountsPerPlayer: Array<Int> = arrayOf(0,0,0,0)
+   var averageScorePerPlayer: Array<Int> = arrayOf(0,0,0,0)
+
+
    init {
 
    }
@@ -37,24 +43,36 @@ object Statistics : Serializable, IGameListener {
    private fun recalculate(game: Game?){
       if(game == null) return
 
-      reset()
 
       this.game = game
+      reset()
+
       var rounds = game.lstRounds
 
       updateGameCounter(rounds)
+      updateAverageScore()
 
       for(i in rounds.indices){
          var round = rounds[i]
 
          updateGameTypeCounter(round)
-
-
-
+         updateWinnersCounter(round)
       }
 
       updateGameTypePercentages()
       notifyStatisticsUpdated()
+   }
+
+   private fun updateAverageScore() {
+      game.lstPlayers.forEachIndexed { index, player ->   averageScorePerPlayer[index] = player.score / roundsPlayed}
+   }
+
+   private fun updateWinnersCounter(round: GameRound?) {
+      for (i in round?.lstWinners?.indices!!){
+         if(round?.lstWinners.get(i)){
+            winningCountsPerPlayer[i] = winningCountsPerPlayer.get(i).inc()
+         }
+      }
    }
 
    private fun reset() {
@@ -64,6 +82,9 @@ object Statistics : Serializable, IGameListener {
       wenzen = 0
       ramsch = 0
       customGames = 0
+
+      winningCountsPerPlayer = arrayOf(0,0,0,0)
+      averageScorePerPlayer = arrayOf(0,0,0,0)
    }
 
    private fun updateGameTypePercentages() {

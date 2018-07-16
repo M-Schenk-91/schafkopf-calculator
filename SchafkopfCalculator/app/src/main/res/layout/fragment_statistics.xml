@@ -6,6 +6,7 @@
    android:orientation="vertical"
    android:layout_height="match_parent">
 
+   <!--
    <android.support.v7.widget.CardView android:id="@+id/card_view_games_played"
       xmlns:card_view="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
@@ -50,24 +51,76 @@
 
 
    </android.support.v7.widget.CardView>
+-->
 
-   <android.support.v7.widget.CardView android:id="@+id/card_view_game_types"
-      xmlns:card_view="http://schemas.android.com/apk/res-auto"
+   <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="300dp"
-      android:layout_gravity="top"
-      android:layout_marginEnd="8dp"
-      android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
-      card_view:cardCornerRadius="4dp">
+      android:layout_height="match_parent">
 
-      <com.github.mikephil.charting.charts.PieChart
-         android:id="@+id/chart"
+      <LinearLayout
          android:layout_width="match_parent"
-         android:layout_height="match_parent" />
+         android:layout_height="wrap_content"
+         android:orientation="vertical" >
 
-   </android.support.v7.widget.CardView>
+         <android.support.v7.widget.CardView
+            android:id="@+id/card_view_game_types"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="top"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="4dp">
+
+            <com.github.mikephil.charting.charts.PieChart
+               android:id="@+id/chartStatisticsGamesPlayed"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent" />
+
+         </android.support.v7.widget.CardView>
+
+
+
+         <android.support.v7.widget.CardView
+            android:id="@+id/card_view_winning_counts"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="top"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="4dp">
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+               android:id="@+id/chartStatisticsWinningCounts"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent" />
+         </android.support.v7.widget.CardView>
+
+         <android.support.v7.widget.CardView
+            android:id="@+id/card_view_AverageScores"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="top"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="4dp">
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+               android:id="@+id/chartStatisticsAverageScores"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent" />
+
+         </android.support.v7.widget.CardView>
+      </LinearLayout>
+   </ScrollView>
 
 </android.support.v7.widget.LinearLayoutCompat>
