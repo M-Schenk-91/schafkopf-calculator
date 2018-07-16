@@ -16,6 +16,7 @@
     <color name="colorToggleButtonSelected">@color/colorPrimaryDark</color>
 
     <color name="colorNegative">#800000</color>
+    <color name="colorCardHeader">@color/gray</color>
 
 
 </resources>
