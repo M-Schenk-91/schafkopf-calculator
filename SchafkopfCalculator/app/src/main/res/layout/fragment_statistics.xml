@@ -144,7 +144,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:text="Siege pro Spieler"
+                            android:text="Siege"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
 

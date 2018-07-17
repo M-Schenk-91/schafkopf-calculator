@@ -18,6 +18,7 @@
     <color name="colorNegative">#800000</color>
     <color name="colorCardHeader">@color/colorPrimaryDark</color>
     <color name="colorCardBg">@color/white</color>
+    <color name="bgInputField">@color/white</color>
 
 
 </resources>

@@ -31,5 +31,8 @@
    <string name="title_statistics">Statistik</string>
    <string name="descRoundsPlayed">Gespielte Runden:</string>
    <string name="chart_no_games">Noch keine Runden gespielt</string>
+    <string name="custom_input_info">Manuelle Änderung für diese Runde eintragen!</string>
+    <string name="custom_input_info_wrong">Die Summe der Einzelspieler muss aufgehen!</string>
+    <string name="custom_input_info_correct" />
 
 </resources>
