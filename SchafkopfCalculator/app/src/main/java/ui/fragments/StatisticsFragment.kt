@@ -23,6 +23,7 @@ import game.Statistics
 import kotlinx.android.synthetic.main.fragment_statistics.chartStatisticsAverageScores
 import kotlinx.android.synthetic.main.fragment_statistics.chartStatisticsGamesPlayed
 import kotlinx.android.synthetic.main.fragment_statistics.chartStatisticsWinningCounts
+import ui.AppColors
 import ui.UiUtils
 import ui.custom.SchafkopfFragment
 import ui.interfaces.IStatisticsListener
@@ -65,7 +66,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       }
 
       var dataset = BarDataSet(entries, "")
-      dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
+      dataset.colors = AppColors.PLAYER_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
       var barData = BarData(dataset)
@@ -125,7 +126,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       }
 
       var dataset = BarDataSet(entries, "")
-      dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
+      dataset.colors = AppColors.PLAYER_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
       var barData = BarData(dataset)
@@ -196,10 +197,11 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       )
 
       var dataset = PieDataSet(entries, "LABEL")
-      dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
+      dataset.colors = AppColors.STATISTICS_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
       var pieData = PieData(dataset)
+      pieData.setValueTextColor(Color.WHITE)
       pieData.setValueFormatter(object : IValueFormatter {
          override fun getFormattedValue(
                value: Float,
@@ -218,7 +220,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsGamesPlayed.setNoDataText(context.getString(R.string.chart_no_games))
       chartStatisticsGamesPlayed.setDrawEntryLabels(true)
       chartStatisticsGamesPlayed.setUsePercentValues(true)
-      chartStatisticsGamesPlayed.setEntryLabelColor(Color.BLACK)
+      chartStatisticsGamesPlayed.setEntryLabelColor(Color.WHITE)
       chartStatisticsGamesPlayed.setEntryLabelTextSize(10f)
       chartStatisticsGamesPlayed.legend.isEnabled = false
       chartStatisticsGamesPlayed.description.isEnabled = false

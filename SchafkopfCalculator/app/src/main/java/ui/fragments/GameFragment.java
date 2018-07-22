@@ -42,10 +42,12 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
     private boolean uiCreated = false;
     private ArrayList<IGameFragmentListener> lstGameFragmentListeners = new ArrayList<>();
     private ArrayList<TextView> lstLblsPlayers = new ArrayList<>(), lstLblsPlayerScores = new ArrayList<>();
+    private ArrayList<View> lstColorIndicators = new ArrayList<>();
     private Game game;
     private int roundMultiplicator = 1;
     private ScoreListAdapter adapter;
     private LinearLayout layPlayers, layScore;
+    private View colorIndicator1, colorIndicator2, colorIndicator3, colorIndicator4;
 
     public GameFragment() {
         game = new Game(new GameSettings());
@@ -146,6 +148,8 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
             //Name
             String playerName = game.getLstPlayers().get(i).getName();
             if (!playerName.equals("")) lstLblsPlayers.get(i).setText(playerName);
+
+            lstColorIndicators.get(i).setBackgroundColor(AppColors.PLAYER_COLORS[i]);
         }
 
         updateListView(game);
@@ -186,6 +190,16 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
         lblPlayer4 = (TextView) view.findViewById(R.id.lbl_player_4);
         lstLblsPlayers.add(lblPlayer4);
 
+        lstColorIndicators.clear();
+        colorIndicator1 =  view.findViewById(R.id.color_inidcator_player_1);
+        lstColorIndicators.add(colorIndicator1);
+        colorIndicator2 = view.findViewById(R.id.color_inidcator_player_2);
+        lstColorIndicators.add(colorIndicator2);
+        colorIndicator3 = view.findViewById(R.id.color_inidcator_player_3);
+        lstColorIndicators.add(colorIndicator3);
+        colorIndicator4 =  view.findViewById(R.id.color_inidcator_player_4);
+        lstColorIndicators.add(colorIndicator4);
+
         lstLblsPlayerScores.clear();
 
         lblScorePlayer1 = (TextView) view.findViewById(R.id.lbl_score_player_1);
@@ -203,6 +217,7 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
         lstViewRounds = (ListView) view.findViewById(R.id.lst_rounds);
 
         layPlayers = (LinearLayout) view.findViewById(R.id.lay_players_top);
+        //layPlayers.setBackgroundColor(AppColors.COLOR_PRIMARY_TRANSPARENT);
         layScore = (LinearLayout) view.findViewById(R.id.lay_players_score);
     }
 
