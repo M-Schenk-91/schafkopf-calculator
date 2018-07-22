@@ -34,4 +34,9 @@ public class SchafkopfButton extends AppCompatButton {
 
         setAlpha(enabled ? 1 : alphaDisabled);
     }
+
+    public void setColorBg(int colorBg) {
+        this.colorBg = colorBg;
+        setBackgroundColor(colorBg);
+    }
 }

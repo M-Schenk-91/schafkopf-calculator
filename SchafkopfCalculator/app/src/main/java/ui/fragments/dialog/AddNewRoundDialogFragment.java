@@ -13,12 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.schenk.matthias.schafkopfcalculator.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import game.Game;
@@ -26,7 +23,6 @@ import game.GameController;
 import game.GameMode;
 import game.GameRound;
 import ui.custom.controls.fw.SchafkopfButton;
-import ui.custom.controls.fw.SchafkopfToggleButton;
 import ui.FragmentController;
 import ui.interfaces.IRoundDialogListener;
 
@@ -61,6 +57,7 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
 
     private GameRound gameRoundResult;
     private static Game activeGame;
+    private int multiplicator = 1;
 
     public AddNewRoundDialogFragment() {
 
@@ -75,8 +72,6 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
         fragments.put(PHASE_CUSTOM_INPUT, frCustomValueInput);
 
         activeGame = GameController.getInstance().getActiveGame();
-        gameRoundResult = new GameRound(activeGame);
-
     }
 
     @Override
@@ -129,8 +124,8 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
 
         phase = PHASE_CHOOSE_GAME_MODE;
 
-        int multiplicator = getArguments().getInt("multiplicator");
-        gameRoundResult.setMultiplicator(multiplicator);
+        multiplicator = getArguments().getInt("multiplicator");
+        resetGameRoundResult();
 
         btnPositive = (SchafkopfButton) view.findViewById(R.id.btn_next);
         btnPositive.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +160,15 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
         }
 
         phase--;
+
+        if(phase == PHASE_CHOOSE_GAME_MODE) resetGameRoundResult();
+
         changePhase(phase, FragmentController.TRANSITION_IN_LEFT_TO_RIGHT);
+    }
+
+    private void resetGameRoundResult() {
+        gameRoundResult = new GameRound(activeGame);
+        gameRoundResult.setMultiplicator(multiplicator);
     }
 
     private void nextPhase() {
@@ -341,5 +344,15 @@ public class AddNewRoundDialogFragment extends DialogFragment implements IRoundD
                 break;
 
         }
+    }
+
+    @Override
+    public void onProceedAllowedChanged(boolean proceedAllowed) {
+        btnPositive.setEnabled(proceedAllowed);
+    }
+
+    @Override
+    public void onCustomRoundChanged(GameRound gameRoundResult) {
+
     }
 }

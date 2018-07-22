@@ -10,6 +10,9 @@ public class AppColors {
 
     public static final int COLOR_PRIMARY = 0x004d40;
     public static final int COLOR_PRIMARY_TRANSPARENT = Color.argb(30, Color.red(COLOR_PRIMARY), Color.green(COLOR_PRIMARY), Color.blue(COLOR_PRIMARY));
+    public static final int COLOR_NEUTRAL = Color.GRAY;
+    public static final int COLOR_POSITIVE = Color.argb(255, 0, 153, 0);
+    public static final int COLOR_NEGATIVE =  Color.argb(255, 204, 0, 0);
 
     public static int getScoreTextColor(double score, boolean grayout, boolean solo, boolean totalScore) {
         int alpha = 255;

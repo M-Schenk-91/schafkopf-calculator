@@ -73,7 +73,7 @@ public class GameRound implements Serializable {
             result += "Schwarz";
         }
 
-        if(!isSchneider() && !isSchwarz()){
+        if(!isSchneider() && !isSchwarz() && !gameMode.getName().equals(GameController.ID_GAME_MODE_CUSTOM)){
             result += separator;
             result += "Schneiderfrei";
         }
@@ -122,6 +122,9 @@ public class GameRound implements Serializable {
     }
 
     public void calculate() {
+
+        if(gameMode.getName().equals(GameController.ID_GAME_MODE_CUSTOM)) return;
+
         for (int i = 0; i < numPlayers; i++) {
             int change = calculatePlayerScoreChange(i);
 
@@ -208,5 +211,9 @@ public class GameRound implements Serializable {
 
     public void setJungfrau(boolean jungfrau) {
         this.jungfrau = jungfrau;
+    }
+
+    public void setLstScoreChangesPerPlayer(int[] lstScoreChangesPerPlayer) {
+        this.lstScoreChangesPerPlayer = lstScoreChangesPerPlayer;
     }
 }

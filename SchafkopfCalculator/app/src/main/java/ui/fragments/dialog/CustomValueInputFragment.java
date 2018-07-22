@@ -10,17 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.schenk.matthias.schafkopfcalculator.R;
-
 import game.Game;
 import game.GameController;
 import game.GameRound;
-import ui.custom.controls.fw.SchafkopfToggleButton;
+import ui.AppColors;
+import ui.UiUtils;
+import ui.interfaces.IRoundDialogListener;
 
 public class CustomValueInputFragment extends Fragment {
 
-    private AddNewRoundDialogFragment addNewRoundDialogListener;
+    private IRoundDialogListener roundDialogListener;
+    private GameRound gameRoundResult;
 
     private TextView txtInfo;
 
@@ -36,7 +37,6 @@ public class CustomValueInputFragment extends Fragment {
     private Game activeGame;
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,19 +49,26 @@ public class CustomValueInputFragment extends Fragment {
         findViews(view);
 
         Bundle bundle = getArguments();
-        GameRound roundResult = (GameRound) bundle.getSerializable("roundResult");
+        this.gameRoundResult = (GameRound) bundle.getSerializable("roundResult");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initViews();
+        resetViews();
+        resetRound();
     }
 
-    private void initViews() {
-        activeGame = GameController.getInstance().getActiveGame();
+    private void resetRound() {
+        gameRoundResult.setLstWinners(new boolean[]{false, false, false, false});
+        gameRoundResult.setSchneider(false);
+        gameRoundResult.setSchwarz(false);
+        gameRoundResult.setLauf(0);
+        gameRoundResult.setJungfrau(false);
+    }
 
-        txtInfo.setText(getString(R.string.custom_input_info));
+    private void resetViews() {
+        activeGame = GameController.getInstance().getActiveGame();
 
         txtPlayer1.setText(activeGame.getLstPlayers().get(0).getName() + ":");
         txtPlayer2.setText(activeGame.getLstPlayers().get(1).getName() + ":");
@@ -72,6 +79,9 @@ public class CustomValueInputFragment extends Fragment {
         edtPlayer2.setText("" + 0);
         edtPlayer3.setText("" + 0);
         edtPlayer4.setText("" + 0);
+
+        txtInfo.setTextColor(AppColors.COLOR_NEUTRAL);
+        txtInfo.setText(getString(R.string.custom_input_info));
     }
 
     private void findViews(View view) {
@@ -93,19 +103,7 @@ public class CustomValueInputFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                double score1 = Double.parseDouble(edtPlayer1.getText().toString());
-                double score2 = Double.parseDouble(edtPlayer2.getText().toString());
-                double score3 = Double.parseDouble(edtPlayer3.getText().toString());
-                double score4 = Double.parseDouble(edtPlayer4.getText().toString());
-
-                boolean isCorrect = score1 + score2 + score3 + score4 == 0;
-                
-                if(isCorrect){
-                    txtInfo.setText(getString(R.string.custom_input_info_correct));
-                }else{
-                    txtInfo.setText(getString(R.string.custom_input_info_wrong));
-                }
+                checkInput();
             }
 
             @Override
@@ -116,10 +114,55 @@ public class CustomValueInputFragment extends Fragment {
         edtPlayer2.addTextChangedListener(watcher);
         edtPlayer3.addTextChangedListener(watcher);
         edtPlayer4.addTextChangedListener(watcher);
-
     }
 
-    public void setAddNewRoundDialogListener(AddNewRoundDialogFragment addNewRoundDialogListener) {
-        this.addNewRoundDialogListener = addNewRoundDialogListener;
+    private void checkInput() {
+        String txtEdt1 = edtPlayer1.getText().toString();
+        String txtEdt2 = edtPlayer2.getText().toString();
+        String txtEdt3 = edtPlayer3.getText().toString();
+        String txtEdt4 = edtPlayer4.getText().toString();
+
+        boolean isCorrect = UiUtils.isInteger(txtEdt1) && UiUtils.isInteger(txtEdt2) && UiUtils.isInteger(txtEdt3) && UiUtils.isInteger(txtEdt4);
+        roundDialogListener.onProceedAllowedChanged(isCorrect);
+        if(!isCorrect){
+            txtInfo.setTextColor(AppColors.COLOR_NEUTRAL);
+            txtInfo.setText(getString(R.string.custom_input_info));
+            return;
+        }
+
+        int score1 = Integer.parseInt(txtEdt1);
+        int score2 = Integer.parseInt(txtEdt2);
+        int score3 = Integer.parseInt(txtEdt3);
+        int score4 = Integer.parseInt(txtEdt4);
+
+        isCorrect = !((score1 == 0) && (score2 == 0) &&(score3 == 0) &&(score4 == 0));
+        roundDialogListener.onProceedAllowedChanged(isCorrect);
+
+        if(!isCorrect){
+            txtInfo.setTextColor(AppColors.COLOR_NEUTRAL);
+            txtInfo.setText(getString(R.string.custom_input_info));
+            return;
+        }
+
+        isCorrect = score1 + score2 + score3 + score4 == 0;
+
+        if(isCorrect){
+            txtInfo.setText(getString(R.string.custom_input_info_correct));
+            txtInfo.setTextColor(AppColors.COLOR_POSITIVE);
+
+            gameRoundResult.setLstWinners(new boolean[]{score1 > 0, score2 > 0, score3 > 0, score4 > 0});
+            gameRoundResult.setLstScoreChangesPerPlayer(new int[]{score1, score2, score3, score4});
+
+            roundDialogListener.onCustomRoundChanged(gameRoundResult);
+        }else{
+            txtInfo.setText(getString(R.string.custom_input_info_wrong));
+            txtInfo.setTextColor(AppColors.COLOR_NEGATIVE);
+        }
+
+        roundDialogListener.onProceedAllowedChanged(isCorrect);
+    }
+
+    public void setAddNewRoundDialogListener(IRoundDialogListener roundDialogListener) {
+        this.roundDialogListener = roundDialogListener;
     }
 }

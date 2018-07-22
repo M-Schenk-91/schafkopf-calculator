@@ -20,6 +20,7 @@ import game.Game;
 import game.GameController;
 import game.GameMode;
 import game.GameSettings;
+import ui.UiUtils;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.custom.SchafkopfFragment;
 import ui.interfaces.IGameSettingsFragmentListener;
@@ -174,7 +175,7 @@ public class GameSetupFragment extends SchafkopfFragment {
     }
 
     private int checkValidityAndGetIntValue(String s) {
-        if (isNumeric(s)) return Integer.parseInt(s);
+        if (UiUtils.isInteger(s)) return Integer.parseInt(s);
 
         getSchafkopfActivity().showToast("Zahl " + s + "ist ungültig!");
         settingsValid = false;

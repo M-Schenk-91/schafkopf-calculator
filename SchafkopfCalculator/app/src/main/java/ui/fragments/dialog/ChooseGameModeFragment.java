@@ -11,6 +11,7 @@ import com.schenk.matthias.schafkopfcalculator.R;
 
 import game.GameController;
 import game.GameMode;
+import ui.AppColors;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.interfaces.IRoundDialogListener;
 
@@ -73,6 +74,7 @@ public class ChooseGameModeFragment extends Fragment {
         });
 
         SchafkopfButton btnCustom = (SchafkopfButton) view.findViewById(R.id.btn_custom_input);
+        btnCustom.setColorBg(AppColors.COLOR_NEUTRAL);
         btnCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

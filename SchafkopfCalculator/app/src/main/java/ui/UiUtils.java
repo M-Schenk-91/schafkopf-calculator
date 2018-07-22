@@ -35,4 +35,22 @@ public class UiUtils {
         SimpleDateFormat formatedDay = new SimpleDateFormat("EEEE", Locale.GERMANY);
         return formatedDay.format(calendar.getTime()).substring(0, 2) + ", " + formatedDate + " Uhr";
     }
+
+    public static boolean isInteger(String str) {
+        try {
+            int i = Integer.parseInt(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isDouble(String str) {
+        try {
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 }
