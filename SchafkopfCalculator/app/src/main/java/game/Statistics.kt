@@ -1,8 +1,6 @@
 package game
 
 import android.util.Log
-import com.github.mikephil.charting.utils.Utils.init
-import com.schenk.matthias.schafkopfcalculator.R.menu.settings
 import ui.interfaces.IGameListener
 import ui.interfaces.IStatisticsListener
 import java.io.Serializable
@@ -13,37 +11,24 @@ object Statistics : Serializable, IGameListener {
    lateinit var game: Game
 
    var roundsPlayed: Int = 0
-
-   var normalGames: Int = 0;
-   var normalGamesPercent: Int = 0;
-
-   var solos: Int = 0;
-   var solosPercent: Int = 0;
-
-   var wenzen: Int = 0;
-   var wenzenPercent: Int = 0;
-
-   var ramsch: Int = 0;
-   var ramschPercent: Int = 0;
-
-   var customGames: Int = 0;
-   var customGamesPercent: Int = 0;
-
-   var winningCountsPerPlayer: Array<Int> = arrayOf(0,0,0,0)
-   var averageScorePerPlayer: Array<Double> = arrayOf(0.00,0.00,0.00,0.00)
+   var normalGames: Int = 0
+   var solos: Int = 0
+   var wenzen: Int = 0
+   var ramsch: Int = 0
+   var customGames: Int = 0
+   var winningCountsPerPlayer: Array<Int> = arrayOf(0, 0, 0, 0)
+   var averageScorePerPlayer: Array<Double> = arrayOf(0.00, 0.00, 0.00, 0.00)
 
 
    init {
-      Log.d("Statistics", "Statistics initialized")
    }
 
    fun addStatisticsListener(listener: IStatisticsListener) {
       listeners.add(listener)
    }
 
-   private fun recalculate(game: Game?){
-      if(game == null) return
-
+   private fun recalculate(game: Game?) {
+      if (game == null) return
 
       this.game = game
       reset()
@@ -53,29 +38,29 @@ object Statistics : Serializable, IGameListener {
       updateGameCounter(rounds)
       updateAverageScore()
 
-      for(i in rounds.indices){
+      for (i in rounds.indices) {
          var round = rounds[i]
 
          updateGameTypeCounter(round)
          updateWinnersCounter(round)
       }
 
-      updateGameTypePercentages()
       notifyStatisticsUpdated()
    }
 
    private fun updateAverageScore() {
       game.lstPlayers.forEachIndexed { index, player ->
 
-         if(roundsPlayed > 0){
-            averageScorePerPlayer[index] = (player.score.toDouble() /100) / roundsPlayed}
+         if (roundsPlayed > 0) {
+            averageScorePerPlayer[index] = (player.score.toDouble() / 100) / roundsPlayed
+         }
       }
    }
 
    private fun updateWinnersCounter(round: GameRound?) {
-      for (i in round?.lstWinners?.indices!!){
-         if(round?.lstWinners.get(i)){
-            winningCountsPerPlayer[i] = winningCountsPerPlayer.get(i).inc()
+      for (i in round?.lstWinners?.indices!!) {
+         if (round?.lstWinners[i]) {
+            winningCountsPerPlayer[i] = winningCountsPerPlayer[i].inc()
          }
       }
    }
@@ -88,16 +73,12 @@ object Statistics : Serializable, IGameListener {
       ramsch = 0
       customGames = 0
 
-      winningCountsPerPlayer = arrayOf(0,0,0,0)
-      averageScorePerPlayer = arrayOf(0.00,0.00,0.00,0.00)
-   }
-
-   private fun updateGameTypePercentages() {
-
+      winningCountsPerPlayer = arrayOf(0, 0, 0, 0)
+      averageScorePerPlayer = arrayOf(0.00, 0.00, 0.00, 0.00)
    }
 
    private fun updateGameTypeCounter(round: GameRound) {
-      when(round.gameMode.name){
+      when (round.gameMode.name) {
          GameController.ID_GAME_MODE_DEFAULT -> normalGames++
          GameController.ID_GAME_MODE_SOLO -> solos++
          GameController.ID_GAME_MODE_WENZ -> wenzen++

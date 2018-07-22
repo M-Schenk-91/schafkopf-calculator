@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -12,29 +14,23 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.schenk.matthias.schafkopfcalculator.R
 import game.Statistics
-import ui.custom.SchafkopfFragment
-import kotlinx.android.synthetic.main.fragment_statistics.*
-import kotlinx.android.synthetic.main.fragment_statistics.view.chartStatisticsWinningCounts
-import ui.interfaces.IStatisticsListener
-import java.util.logging.Logger
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import com.schenk.matthias.schafkopfcalculator.R.id.chartStatisticsGamesPlayed
-import ui.AppColors
+import kotlinx.android.synthetic.main.fragment_statistics.chartStatisticsAverageScores
+import kotlinx.android.synthetic.main.fragment_statistics.chartStatisticsGamesPlayed
+import kotlinx.android.synthetic.main.fragment_statistics.chartStatisticsWinningCounts
 import ui.UiUtils
+import ui.custom.SchafkopfFragment
+import ui.interfaces.IStatisticsListener
 
 var animationMillis: Int = 500
 
 
-
-class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
+class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
 
    /*
       Framework: https://github.com/PhilJay/MPAndroidChart
@@ -54,29 +50,27 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
 
    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      //txtStatisticsRoundsPlayedVal.text = Statistics.roundsPlayed.toString()
 
       setupPlayedGamesChart()
-      setupWinningCountsPerPlayerChart()
       setupAverageScoresChart()
-
+      setupWinningCountsPerPlayerChart()
    }
 
    private fun setupAverageScoresChart() {
       var entries: ArrayList<BarEntry> = ArrayList()
+      var labels: Array<String> = Statistics.game.settings.lstPlayerNames
 
       Statistics.averageScorePerPlayer.forEachIndexed { index, i ->
-
          entries.add(BarEntry(index.toFloat().inc(), i.toFloat()))
       }
 
-      var dataset = BarDataSet(entries, "LABEL")
+      var dataset = BarDataSet(entries, "")
       dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
-      var pieData = BarData(dataset)
-      pieData.barWidth = 0.5f
-      pieData.setValueFormatter(object: IValueFormatter {
+      var barData = BarData(dataset)
+      barData.barWidth = 0.5f
+      barData.setValueFormatter(object : IValueFormatter {
          override fun getFormattedValue(
                value: Float,
                entry: Entry?,
@@ -88,21 +82,27 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
 
       })
 
+      chartStatisticsAverageScores.setDrawGridBackground(false)
+      chartStatisticsAverageScores.animateXY(animationMillis, animationMillis)
       chartStatisticsAverageScores.setNoDataText(context.getString(R.string.chart_no_games))
-      chartStatisticsAverageScores.legend.isEnabled = false;
+      chartStatisticsAverageScores.legend.isEnabled = false
       chartStatisticsAverageScores.description.isEnabled = false
       chartStatisticsAverageScores.setTouchEnabled(false)
       chartStatisticsAverageScores.setDrawValueAboveBar(false)
 
+      val formatter = object : IAxisValueFormatter {
+         val decimalDigits: Int
+            get() = 0
 
-      //chartStatisticsAverageScores.xAxis.axisMaximum = 5.toFloat()
-      //chartStatisticsAverageScores.xAxis.axisMinimum = 0.toFloat()
+         override fun getFormattedValue(value: Float, axis: AxisBase): String {
+            return labels[value.toInt() - 1]
+         }
+      }
+
+      chartStatisticsAverageScores.xAxis.setGranularity(1f)
+      chartStatisticsAverageScores.xAxis.setValueFormatter(formatter)
       chartStatisticsAverageScores.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
       chartStatisticsAverageScores.xAxis.setDrawGridLines(false)
-      //chartStatisticsAverageScores.xAxis.setDrawLabels(false)
-      //chartStatisticsAverageScores.xAxis.setDrawAxisLine(false)
-
 
       chartStatisticsAverageScores.axisLeft.setDrawGridLines(false)
       chartStatisticsAverageScores.axisLeft.setDrawLabels(false)
@@ -112,26 +112,26 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
       chartStatisticsAverageScores.axisRight.setDrawLabels(false)
       chartStatisticsAverageScores.axisRight.setDrawAxisLine(false)
 
-      chartStatisticsAverageScores.setDrawGridBackground(false)
-      chartStatisticsAverageScores.animateXY(animationMillis, animationMillis)
-      chartStatisticsAverageScores.data = pieData
+      chartStatisticsAverageScores.data = barData
+
    }
 
    private fun setupWinningCountsPerPlayerChart() {
       var entries: ArrayList<BarEntry> = ArrayList()
+      var labels: Array<String> = Statistics.game.settings.lstPlayerNames
 
       Statistics.winningCountsPerPlayer.forEachIndexed { index, i ->
-
          entries.add(BarEntry(index.toFloat().inc(), i.toFloat()))
       }
 
-      var dataset = BarDataSet(entries, "LABEL")
+      var dataset = BarDataSet(entries, "")
       dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
       dataset.valueTextSize = 16F
 
-      var pieData = BarData(dataset)
-      pieData.barWidth = 0.5f
-      pieData.setValueFormatter(object: IValueFormatter {
+      var barData = BarData(dataset)
+      barData.barWidth = 0.5f
+
+      barData.setValueFormatter(object : IValueFormatter {
          override fun getFormattedValue(
                value: Float,
                entry: Entry?,
@@ -140,27 +140,29 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
          ): String {
             return value.toInt().toString()
          }
-
       })
 
       chartStatisticsWinningCounts.setNoDataText(context.getString(R.string.chart_no_games))
-      chartStatisticsWinningCounts.legend.isEnabled = false;
+      chartStatisticsWinningCounts.legend.isEnabled = false
       chartStatisticsWinningCounts.description.isEnabled = false
       chartStatisticsWinningCounts.setTouchEnabled(false)
       chartStatisticsWinningCounts.setDrawValueAboveBar(false)
+      chartStatisticsWinningCounts.setDrawGridBackground(false)
+      chartStatisticsWinningCounts.animateXY(animationMillis, animationMillis)
 
-      //chartStatisticsWinningCounts.xAxis.axisMaximum = 5.toFloat()
-      //chartStatisticsWinningCounts.xAxis.axisMinimum = 0.toFloat()
+      val formatter = object : IAxisValueFormatter {
+         val decimalDigits: Int
+            get() = 0
 
+         override fun getFormattedValue(value: Float, axis: AxisBase): String {
+            return labels[value.toInt().dec()]
+         }
+      }
+
+      chartStatisticsWinningCounts.xAxis.setGranularity(1f)
+      chartStatisticsWinningCounts.xAxis.setValueFormatter(formatter)
       chartStatisticsWinningCounts.xAxis.setDrawGridLines(false)
-      //chartStatisticsWinningCounts.xAxis.setDrawLabels(false)
-      //chartStatisticsWinningCounts.xAxis.setDrawAxisLine(false)
-      chartStatisticsWinningCounts.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-
-
-      //chartStatisticsWinningCounts.axisLeft.axisMaximum = Statistics.roundsPlayed.toFloat()
-      //chartStatisticsWinningCounts.axisLeft.axisMinimum = 0.toFloat()
+      chartStatisticsWinningCounts.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
 
       chartStatisticsWinningCounts.axisLeft.setDrawGridLines(false)
       chartStatisticsWinningCounts.axisLeft.setDrawLabels(false)
@@ -170,51 +172,59 @@ class StatisticsFragment : SchafkopfFragment (), IStatisticsListener {
       chartStatisticsWinningCounts.axisRight.setDrawLabels(false)
       chartStatisticsWinningCounts.axisRight.setDrawAxisLine(false)
 
-      chartStatisticsWinningCounts.setDrawGridBackground(false)
-      chartStatisticsWinningCounts.animateXY(animationMillis, animationMillis)
-      chartStatisticsWinningCounts.data = pieData
-
+      chartStatisticsWinningCounts.data = barData
    }
 
    private fun setupPlayedGamesChart() {
-         var entries: ArrayList<PieEntry> = ArrayList()
+      var entries: ArrayList<PieEntry> = ArrayList()
 
-         if(Statistics.normalGames > 0) entries.add(PieEntry(Statistics.normalGames.toFloat(), "Sauspiel"))
-         if(Statistics.solos > 0) entries.add(PieEntry(Statistics.solos.toFloat(), "Solo"))
-         if(Statistics.wenzen > 0) entries.add(PieEntry(Statistics.wenzen.toFloat(), "Wenz"))
-         if(Statistics.ramsch > 0) entries.add(PieEntry(Statistics.ramsch.toFloat(), "Ramsch"))
-         if(Statistics.customGames > 0) entries.add(PieEntry(Statistics.customGames.toFloat(), "Manuelle Eingabe"))
+      if (Statistics.normalGames > 0) entries.add(
+            PieEntry(
+                  Statistics.normalGames.toFloat(),
+                  "Sauspiel"
+            )
+      )
 
-         var dataset = PieDataSet(entries, "LABEL")
-         dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
-         dataset.valueTextSize = 16F
+      if (Statistics.solos > 0) entries.add(PieEntry(Statistics.solos.toFloat(), "Solo"))
+      if (Statistics.wenzen > 0) entries.add(PieEntry(Statistics.wenzen.toFloat(), "Wenz"))
+      if (Statistics.ramsch > 0) entries.add(PieEntry(Statistics.ramsch.toFloat(), "Ramsch"))
+      if (Statistics.customGames > 0) entries.add(
+            PieEntry(
+                  Statistics.customGames.toFloat(),
+                  "Manuelle Eingabe"
+            )
+      )
 
-         var pieData = PieData(dataset)
-         pieData.setValueFormatter(object: IValueFormatter {
-            override fun getFormattedValue(
-                  value: Float,
-                  entry: Entry?,
-                  dataSetIndex: Int,
-                  viewPortHandler: ViewPortHandler?
-            ): String {
-               return value.toInt().toString() + " %"
-            }
+      var dataset = PieDataSet(entries, "LABEL")
+      dataset.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
+      dataset.valueTextSize = 16F
 
-         })
+      var pieData = PieData(dataset)
+      pieData.setValueFormatter(object : IValueFormatter {
+         override fun getFormattedValue(
+               value: Float,
+               entry: Entry?,
+               dataSetIndex: Int,
+               viewPortHandler: ViewPortHandler?
+         ): String {
+            return value.toInt().toString() + " %"
+         }
 
-         chartStatisticsGamesPlayed.setTouchEnabled(false)
-         chartStatisticsGamesPlayed.centerText = Statistics.roundsPlayed.toString()
-         chartStatisticsGamesPlayed.setCenterTextSize(30F)
-         chartStatisticsGamesPlayed.setNoDataText(context.getString(R.string.chart_no_games))
-         chartStatisticsGamesPlayed.setDrawEntryLabels(true)
-       chartStatisticsGamesPlayed.setUsePercentValues(true)
-       chartStatisticsGamesPlayed.setEntryLabelColor(Color.BLACK)
-       chartStatisticsGamesPlayed.setEntryLabelTextSize(10f)
-         chartStatisticsGamesPlayed.legend.isEnabled = false
-         chartStatisticsGamesPlayed.description.isEnabled = false
-         chartStatisticsGamesPlayed.holeRadius = 30.toFloat()
-         chartStatisticsGamesPlayed.transparentCircleRadius = 35.toFloat()
-         chartStatisticsGamesPlayed.animateXY(animationMillis, animationMillis)
-         chartStatisticsGamesPlayed.data = pieData
+      })
+
+      chartStatisticsGamesPlayed.setTouchEnabled(false)
+      chartStatisticsGamesPlayed.centerText = Statistics.roundsPlayed.toString()
+      chartStatisticsGamesPlayed.setCenterTextSize(30F)
+      chartStatisticsGamesPlayed.setNoDataText(context.getString(R.string.chart_no_games))
+      chartStatisticsGamesPlayed.setDrawEntryLabels(true)
+      chartStatisticsGamesPlayed.setUsePercentValues(true)
+      chartStatisticsGamesPlayed.setEntryLabelColor(Color.BLACK)
+      chartStatisticsGamesPlayed.setEntryLabelTextSize(10f)
+      chartStatisticsGamesPlayed.legend.isEnabled = false
+      chartStatisticsGamesPlayed.description.isEnabled = false
+      chartStatisticsGamesPlayed.holeRadius = 30.toFloat()
+      chartStatisticsGamesPlayed.transparentCircleRadius = 35.toFloat()
+      chartStatisticsGamesPlayed.animateXY(animationMillis, animationMillis)
+      chartStatisticsGamesPlayed.data = pieData
    }
 }
