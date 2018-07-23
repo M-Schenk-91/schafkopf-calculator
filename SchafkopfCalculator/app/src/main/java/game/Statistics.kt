@@ -18,6 +18,12 @@ object Statistics : Serializable, IGameListener {
    var customGames: Int = 0
    var winningCountsPerPlayer: Array<Int> = arrayOf(0, 0, 0, 0)
    var averageScorePerPlayer: Array<Double> = arrayOf(0.00, 0.00, 0.00, 0.00)
+   var scoreProgressPlayer1: ArrayList<Int> = ArrayList()
+   var scoreProgressPlayer2: ArrayList<Int> = ArrayList()
+   var scoreProgressPlayer3: ArrayList<Int> = ArrayList()
+   var scoreProgressPlayer4: ArrayList<Int> = ArrayList()
+   var scoreProgress: ArrayList<ArrayList<Int>> = ArrayList()
+
 
 
    init {
@@ -43,9 +49,24 @@ object Statistics : Serializable, IGameListener {
 
          updateGameTypeCounter(round)
          updateWinnersCounter(round)
+         updateScoreProgress(round)
       }
 
       notifyStatisticsUpdated()
+   }
+
+   private fun updateScoreProgress(round: GameRound?) {
+
+      for (i in 0 until round?.numPlayers!!){
+
+         var changes = scoreProgress.get(i)
+         var lastElement = 0
+         if(changes.size > 0) lastElement = changes.get(changes.size - 1)
+
+         changes.add( lastElement + round.getRoundScoreChangeForPlayer(i))
+      }
+
+      Log.d("fsad", "afdas")
    }
 
    private fun updateAverageScore() {
@@ -75,6 +96,19 @@ object Statistics : Serializable, IGameListener {
 
       winningCountsPerPlayer = arrayOf(0, 0, 0, 0)
       averageScorePerPlayer = arrayOf(0.00, 0.00, 0.00, 0.00)
+
+      scoreProgressPlayer1.clear()
+      scoreProgressPlayer2.clear()
+      scoreProgressPlayer3.clear()
+      scoreProgressPlayer4.clear()
+
+      scoreProgress.clear()
+
+      scoreProgress.add(scoreProgressPlayer1)
+      scoreProgress.add(scoreProgressPlayer2)
+      scoreProgress.add(scoreProgressPlayer3)
+      scoreProgress.add(scoreProgressPlayer4)
+
    }
 
    private fun updateGameTypeCounter(round: GameRound) {
