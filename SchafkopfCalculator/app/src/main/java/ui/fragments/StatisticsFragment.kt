@@ -53,8 +53,13 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       super.onViewCreated(view, savedInstanceState)
 
       setupPlayedGamesChart()
+      setupProgressChart()
       setupAverageScoresChart()
       setupWinningCountsPerPlayerChart()
+   }
+
+   private fun setupProgressChart() {
+
    }
 
    private fun setupAverageScoresChart() {
