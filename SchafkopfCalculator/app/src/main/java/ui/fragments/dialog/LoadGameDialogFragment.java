@@ -17,6 +17,7 @@ import com.schenk.matthias.schafkopfcalculator.R;
 
 import java.util.ArrayList;
 
+import game.Statistics;
 import io.IOManager;
 import ui.activities.MainActivity;
 
@@ -80,6 +81,7 @@ public class LoadGameDialogFragment extends DialogFragment {
     private void loadSelectedGame() {
         IOManager mgr = new IOManager(activity.getApplicationContext());
         mgr.addGameListener((MainActivity) activity);
+        mgr.addGameListener(Statistics.INSTANCE);
         mgr.loadGame(fileToLoad, true);
     }
 

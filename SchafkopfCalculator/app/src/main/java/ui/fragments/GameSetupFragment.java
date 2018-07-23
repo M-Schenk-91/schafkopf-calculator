@@ -20,6 +20,7 @@ import game.Game;
 import game.GameController;
 import game.GameMode;
 import game.GameSettings;
+import ui.AppColors;
 import ui.UiUtils;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.custom.SchafkopfFragment;
@@ -156,6 +157,17 @@ public class GameSetupFragment extends SchafkopfFragment {
         layPlayers = (LinearLayout) view.findViewById(R.id.lay_edit_payer_names);
         layGames = (LinearLayout) view.findViewById(R.id.lay_select_games);
         layValues = (LinearLayout) view.findViewById(R.id.lay_select_global_values);
+
+        View indicator1 = view.findViewById(R.id.color_inidcator_player_1);
+        indicator1.setBackgroundColor(AppColors.PLAYER_COLORS[0]);
+        View indicator2 = view.findViewById(R.id.color_inidcator_player_2);
+        indicator2.setBackgroundColor(AppColors.PLAYER_COLORS[1]);
+        View indicator3 = view.findViewById(R.id.color_inidcator_player_3);
+        indicator3.setBackgroundColor(AppColors.PLAYER_COLORS[2]);
+        View indicator4 = view.findViewById(R.id.color_inidcator_player_4);
+        indicator4.setBackgroundColor(AppColors.PLAYER_COLORS[3]);
+
+
     }
 
     private void createNewGame() {

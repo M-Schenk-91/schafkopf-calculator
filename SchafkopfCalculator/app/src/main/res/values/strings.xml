@@ -30,7 +30,7 @@
     <string name="txt_jungfrau">Jungfrau (Doppeln)</string>
    <string name="title_statistics">Statistik</string>
    <string name="descRoundsPlayed">Gespielte Runden:</string>
-   <string name="chart_no_games">Noch keine Runden gespielt</string>
+   <string name="chart_no_games">Zu wenig Runden gespielt</string>
     <string name="custom_input_info">Änderung in cent für diese Runde eintragen</string>
     <string name="custom_input_info_wrong">Summe der Einzelspieler muss aufgehen</string>
     <string name="custom_input_info_correct">Runde kann hinzugefügt werden</string>

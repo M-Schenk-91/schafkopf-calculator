@@ -90,30 +90,60 @@
                             android:focusable="true"
                             android:focusableInTouchMode="true" />
 
-                        <EditText
-                            android:id="@+id/edt_player_1"
-                            android:layout_width="200dp"
+                        <LinearLayout
+                            android:layout_width="207dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:ems="10"
-                            android:gravity="center_horizontal"
-                            android:hint="Name Spieler 1 eingeben"
-                            android:inputType="textPersonName"
-                            android:maxLength="12"
-                            android:nextFocusLeft="@id/edt_player_1"
-                            android:nextFocusUp="@id/edt_player_1"
-                            android:selectAllOnFocus="true"
-                            android:textSize="16sp" />
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/color_inidcator_player_1"
+                                android:layout_width="2dp"
+                                android:layout_gravity="center"
+                                android:layout_height="20dp"
+                                android:background="@color/colorNegative">
+
+                            </View>
+
+                            <EditText
+                                android:id="@+id/edt_player_1"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="5dp"
+                                android:ems="10"
+                                android:gravity="center_horizontal"
+                                android:hint="Name Spieler 1 eingeben"
+                                android:inputType="textPersonName"
+                                android:maxLength="12"
+                                android:nextFocusLeft="@id/edt_player_1"
+                                android:nextFocusUp="@id/edt_player_1"
+                                android:selectAllOnFocus="true"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="207dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/color_inidcator_player_2"
+                            android:layout_width="2dp"
+                            android:layout_gravity="center"
+                            android:layout_height="20dp"
+                            android:background="@color/colorNegative">
+
+                        </View>
 
                         <EditText
                             android:id="@+id/edt_player_2"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="5dp"
                             android:ems="10"
                             android:gravity="center_horizontal"
                             android:hint="Name Spieler 2 eingeben"
@@ -125,14 +155,30 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/edt_player_1" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="207dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/color_inidcator_player_3"
+                            android:layout_width="2dp"
+                            android:layout_gravity="center"
+                            android:layout_height="20dp"
+                            android:background="@color/colorNegative">
+
+                        </View>
 
                         <EditText
                             android:id="@+id/edt_player_3"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="5dp"
                             android:ems="10"
                             android:gravity="center_horizontal"
                             android:hint="Name Spieler 3 eingeben"
@@ -144,15 +190,31 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/edt_player_2" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="207dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/color_inidcator_player_4"
+                            android:layout_width="2dp"
+                            android:layout_gravity="center"
+                            android:layout_height="20dp"
+                            android:background="@color/colorNegative">
+
+                        </View>
 
                         <EditText
                             android:id="@+id/edt_player_4"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="5dp"
                             android:ems="10"
                             android:gravity="center_horizontal"
                             android:hint="Name Spieler 4 eingeben"
@@ -164,6 +226,8 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/edt_player_3" />
+                    </LinearLayout>
+
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

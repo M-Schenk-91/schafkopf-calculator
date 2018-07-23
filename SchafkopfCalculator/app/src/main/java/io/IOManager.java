@@ -136,6 +136,12 @@ public class IOManager {
             fis = new FileInputStream(fileDataRounds);
             ArrayList<GameRound> gameRounds = JSONManager.JSONToRoundData(fis);
 
+            GameRound r = gameRounds.get(0);
+
+            for (int i = 0; i < 300; i++) {
+                gameRounds.add(r);
+            }
+
             if (gameRounds == null) {
                 return null;
             }

@@ -75,7 +75,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsProgress.setNoDataText(context.getString(R.string.chart_no_games))
       chartStatisticsProgress.setNoDataTextColor(Color.BLACK)
 
-      if(Statistics.roundsPlayed <= 0) return
+      if(Statistics.roundsPlayed <= 1) return
 
       var entriesPlayer1: ArrayList<Entry> = ArrayList()
       var entriesPlayer2: ArrayList<Entry> = ArrayList()
@@ -226,6 +226,11 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
    }
 
    private fun setupWinningCountsPerPlayerChart() {
+
+      chartStatisticsWinningCounts.setNoDataText(context.getString(R.string.chart_no_games))
+      chartStatisticsWinningCounts.setNoDataTextColor(Color.BLACK)
+      if(Statistics.roundsPlayed <= 1) return
+
       var entries: ArrayList<BarEntry> = ArrayList()
       var labels: Array<String> = Statistics.game.settings.lstPlayerNames
 
@@ -251,11 +256,10 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
          }
       })
 
-      chartStatisticsWinningCounts.setNoDataText(context.getString(R.string.chart_no_games))
       chartStatisticsWinningCounts.legend.isEnabled = false
       chartStatisticsWinningCounts.description.isEnabled = false
       chartStatisticsWinningCounts.setTouchEnabled(false)
-      chartStatisticsWinningCounts.setDrawValueAboveBar(false)
+      chartStatisticsWinningCounts.setDrawValueAboveBar(true)
       chartStatisticsWinningCounts.setDrawGridBackground(false)
       chartStatisticsWinningCounts.animateXY(animationMillis, animationMillis)
 
@@ -272,6 +276,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsWinningCounts.xAxis.setValueFormatter(formatter)
       chartStatisticsWinningCounts.xAxis.setDrawGridLines(false)
       chartStatisticsWinningCounts.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+      chartStatisticsWinningCounts.getAxisLeft().setAxisMinimum(0.toFloat())
 
       chartStatisticsWinningCounts.axisLeft.setDrawGridLines(false)
       chartStatisticsWinningCounts.axisLeft.setDrawLabels(false)

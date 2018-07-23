@@ -72,6 +72,9 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
         MenuItem itemGame = navigationView.getMenu().getItem(FragmentController.FRAGMENT_GAME);
         itemGame.setEnabled(gameAvailable);
 
+        MenuItem itemStatistics = navigationView.getMenu().getItem(FragmentController.FRAGMENT_STATISTICS);
+        itemStatistics.setEnabled(gameAvailable);
+
     }
 
     private void initUpdates() {
@@ -188,6 +191,10 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
         mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, true);
         MenuItem item = navigationView.getMenu().getItem(FragmentController.FRAGMENT_GAME);
         item.setEnabled(gameAvailable);
+
+        MenuItem itemStatistics = navigationView.getMenu().getItem(FragmentController.FRAGMENT_STATISTICS);
+        itemStatistics.setEnabled(gameAvailable);
+
         setTitle(item.getTitle());
         setMenuItemChecked(item);
     }
