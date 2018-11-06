@@ -74,7 +74,9 @@ public class FragmentController {
         closeKeyboardIfOpen();
 
         if (!activity.isFinishing()){
-            transaction.replace(R.id.content, getFragment(fragment)).commit();
+            transaction.replace(R.id.content, getFragment(fragment));
+            transaction.addToBackStack(null);
+            transaction.commit();
             currentFragment = fragment;
         }
     }
