@@ -10,7 +10,6 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.schenk.matthias.schafkopfcalculator.R
 import game.Statistics
@@ -34,14 +33,14 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
    }
 
    override fun onCreateView(
-         inflater: LayoutInflater?,
+         inflater: LayoutInflater,
          container: ViewGroup?,
          savedInstanceState: Bundle?
    ): View? {
       return inflater?.inflate(R.layout.fragment_statistics, container, false)
    }
 
-   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
       setupScore()
@@ -72,7 +71,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
 
    private fun setupProgressChart() {
 
-      chartStatisticsProgress.setNoDataText(context.getString(R.string.chart_no_games))
+      chartStatisticsProgress.setNoDataText(context!!.getString(R.string.chart_no_games))
       chartStatisticsProgress.setNoDataTextColor(Color.BLACK)
 
       if(Statistics.roundsPlayed <= 1) return
@@ -193,7 +192,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
 
       chartStatisticsAverageScores.setDrawGridBackground(false)
       chartStatisticsAverageScores.animateXY(animationMillis, animationMillis)
-      chartStatisticsAverageScores.setNoDataText(context.getString(R.string.chart_no_games))
+      chartStatisticsAverageScores.setNoDataText(context!!.getString(R.string.chart_no_games))
       chartStatisticsAverageScores.legend.isEnabled = false
       chartStatisticsAverageScores.description.isEnabled = false
       chartStatisticsAverageScores.setTouchEnabled(false)
@@ -227,7 +226,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
 
    private fun setupWinningCountsPerPlayerChart() {
 
-      chartStatisticsWinningCounts.setNoDataText(context.getString(R.string.chart_no_games))
+      chartStatisticsWinningCounts.setNoDataText(context!!.getString(R.string.chart_no_games))
       chartStatisticsWinningCounts.setNoDataTextColor(Color.BLACK)
       if(Statistics.roundsPlayed <= 1) return
 
@@ -330,7 +329,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsGamesPlayed.setTouchEnabled(false)
       chartStatisticsGamesPlayed.centerText = Statistics.roundsPlayed.toString()
       chartStatisticsGamesPlayed.setCenterTextSize(30F)
-      chartStatisticsGamesPlayed.setNoDataText(context.getString(R.string.chart_no_games))
+      chartStatisticsGamesPlayed.setNoDataText(context!!.getString(R.string.chart_no_games))
       chartStatisticsGamesPlayed.setDrawEntryLabels(true)
       chartStatisticsGamesPlayed.setUsePercentValues(true)
       chartStatisticsGamesPlayed.setEntryLabelColor(Color.WHITE)

@@ -19,6 +19,7 @@ import game.GameSettings;
 import game.Statistics;
 import io.IOManager;
 import io.SaveGameUpdater;
+import ui.AppRater;
 import ui.custom.SchafkopfActivity;
 import ui.FragmentController;
 import ui.fragments.StatisticsFragment;
@@ -51,6 +52,8 @@ public class MainActivity extends SchafkopfActivity implements IGameSettingsFrag
         init();
         initUpdates();
         listeners();
+
+        AppRater.getInstance(this).app_launched();
     }
 
     private void init() {
