@@ -17,4 +17,4 @@ SchafkopfCalculator/app/release/output.json
 *.apk
 
 #ide
-.idea
+*.idea
