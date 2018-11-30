@@ -15,3 +15,6 @@
 hs_err_pid*
 SchafkopfCalculator/app/release/output.json
 *.apk
+
+#ide
+.idea
