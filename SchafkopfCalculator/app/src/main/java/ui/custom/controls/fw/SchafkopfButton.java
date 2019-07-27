@@ -1,6 +1,7 @@
 package ui.custom.controls.fw;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 
@@ -24,8 +25,14 @@ public class SchafkopfButton extends AppCompatButton {
         colorTxt = context.getResources().getColor(R.color.colorButtonText);
         alphaDisabled = (float) 0.5;
 
-        setBackgroundColor(colorBg);
+        GradientDrawable shape =  new GradientDrawable();
+        shape.setCornerRadius( 16 );
+        shape.setColor(colorBg);
+
+        setBackground(shape);
+        //setBackgroundColor(colorBg);
         setTextColor(colorTxt);
+
     }
 
     @Override

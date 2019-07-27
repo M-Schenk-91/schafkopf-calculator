@@ -162,6 +162,9 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       dataset.setDrawValues(false)
       dataset.setDrawCircles(false)
       dataset.lineWidth = 4f
+      dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+
+
    }
 
    private fun setupAverageScoresChart() {
@@ -177,7 +180,8 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       dataset.valueTextSize = 16F
 
       var barData = BarData(dataset)
-      barData.barWidth = 0.5f
+      barData.barWidth = 0.4f
+
       barData.setValueFormatter(object : IValueFormatter {
          override fun getFormattedValue(
                value: Float,
@@ -242,7 +246,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       dataset.valueTextSize = 16F
 
       var barData = BarData(dataset)
-      barData.barWidth = 0.5f
+      barData.barWidth = 0.4f
 
       barData.setValueFormatter(object : IValueFormatter {
          override fun getFormattedValue(

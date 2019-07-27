@@ -1,6 +1,7 @@
 package ui.activities;
 
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.schenk.matthias.schafkopfcalculator.R;
 
@@ -42,6 +45,8 @@ public class MainActivity extends SchafkopfActivity
    private boolean paused = false;
    private SaveGameUpdater saveGameUpdater;
    private boolean cachedGameUpdated = false;
+   private TextView toolbarTitle;
+   private ImageView toolBarImage;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +72,16 @@ public class MainActivity extends SchafkopfActivity
 
       setSupportActionBar(toolbar);
       toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+      getSupportActionBar().setDisplayShowTitleEnabled(false);
 
       //drawerToggle = setupDrawerToggle();
       //drawerLayout.addDrawerListener(drawerToggle);
 
       mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, false);
+      setToolBarTitle(getResources().getString(R.string.title_new_game), getResources().getDrawable(R.drawable.ic_heart));
+
       MenuItem itemSetup = navigationView.getMenu()
             .getItem(FragmentController.FRAGMENT_GAME_SETUP);
-      setTitle(itemSetup.getTitle());
       setMenuItemChecked(itemSetup);
 
       MenuItem itemGame = navigationView.getMenu()
@@ -151,27 +158,35 @@ public class MainActivity extends SchafkopfActivity
                   switch (menuItem.getItemId()) {
                      case R.id.new_game:
                         mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, true);
+                        setToolBarTitle(getResources().getString(R.string.title_new_game), getResources().getDrawable(R.drawable.ic_heart));
                         break;
                      case R.id.game_overwiew:
                         mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, true);
+                        setToolBarTitle(getResources().getString(R.string.title_game), getResources().getDrawable(R.drawable.ic_ball));
                         break;
                      case R.id.statistics:
                         mgrFragments.setFragment(FragmentController.FRAGMENT_STATISTICS, true);
+                        setToolBarTitle(getResources().getString(R.string.title_statistics), getResources().getDrawable(R.drawable.ic_leaf));
                         break;
                   }
 
                   setMenuItemChecked(menuItem);
-                  setTitle(menuItem.getTitle());
-                  //drawerLayout.closeDrawers();
                   return true;
                }
             });
+   }
+
+   private void setToolBarTitle(String text, Drawable ic) {
+      toolbarTitle.setText(text);
+      toolBarImage.setImageDrawable(ic);
    }
 
    private void findControls() {
       //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
       navigationView = (BottomNavigationView) findViewById(R.id.navigation);
       toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitle = findViewById(R.id.toolbar_text);
+      toolBarImage = findViewById(R.id.toolbar_logo);
    }
 
    @Override
@@ -204,6 +219,7 @@ public class MainActivity extends SchafkopfActivity
 
    private void switchToGameFragment(boolean cached) {
       mgrFragments.setFragment(FragmentController.FRAGMENT_GAME, !cached);
+
       MenuItem item = navigationView.getMenu()
             .getItem(FragmentController.FRAGMENT_GAME);
       item.setEnabled(gameAvailable);
@@ -212,7 +228,7 @@ public class MainActivity extends SchafkopfActivity
             .getItem(FragmentController.FRAGMENT_STATISTICS);
       itemStatistics.setEnabled(gameAvailable);
 
-      setTitle(item.getTitle());
+      setToolBarTitle(getResources().getString(R.string.title_game), getResources().getDrawable(R.drawable.ic_ball));
       setMenuItemChecked(item);
    }
 

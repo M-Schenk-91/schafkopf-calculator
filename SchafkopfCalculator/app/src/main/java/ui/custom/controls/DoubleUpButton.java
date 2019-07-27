@@ -1,6 +1,7 @@
 package ui.custom.controls;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.schenk.matthias.schafkopfcalculator.R;
 
 import java.util.ArrayList;
 
+import ui.AppColors;
 import ui.custom.SchafkopfActivity;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.interfaces.IDoubleUpListener;
@@ -64,10 +66,20 @@ public class DoubleUpButton extends LinearLayout {
         btnDoubleUp = (SchafkopfButton) this
                 .findViewById(R.id.btn_double_up);
 
+        GradientDrawable shapeDoubleUp =  new GradientDrawable();
+        shapeDoubleUp.setCornerRadius( 16 );
+        shapeDoubleUp.setColor(getResources().getColor(R.color.gray));
+        btnDoubleUp.setBackground(shapeDoubleUp);
+
         btnClearDoubleUps = (ImageButton) this
                 .findViewById(R.id.btn_clear_double_ups);
 
-        btnClearDoubleUps.setBackgroundColor(activity.getResources().getColor(R.color.colorNegative));
+        GradientDrawable shapeClear =  new GradientDrawable();
+        shapeClear.setCornerRadius( 16 );
+        shapeClear.setColor(getResources().getColor(R.color.colorNegative));
+        btnClearDoubleUps.setBackground(shapeClear);
+
+        //btnClearDoubleUps.setBackgroundColor(activity.getResources().getColor(R.color.colorNegative));
         btnClearDoubleUps.setEnabled(false);
 
         btnDoubleUp.setOnClickListener(new View.OnClickListener() {
