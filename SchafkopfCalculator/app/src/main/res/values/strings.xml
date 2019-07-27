@@ -18,7 +18,7 @@
     <string name="choose_game_to_load">Spiel zum laden auswählen</string>
     <string name="load">laden</string>
     <string name="are_u_sure">Sicher?</string>
-    <string name="override_game">Die aktuellen Spieldaten gehen verloren</string>
+    <string name="override_game">Ungespeicherte Spieldaten gehen verloren</string>
     <string name="no_games_saved">Keine Spiele gespeichert</string>
     <string name="create">Erstellen</string>
     <string name="add">Hinzufügen</string>
