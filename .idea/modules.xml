@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/schafkopf-calculator.iml" filepath="$PROJECT_DIR$/.idea/schafkopf-calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schafkopf-calculator.iml" filepath="$PROJECT_DIR$/schafkopf-calculator.iml" />
     </modules>
   </component>
 </project>

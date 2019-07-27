@@ -34,5 +34,4 @@
     <string name="custom_input_info">Änderung in cent für diese Runde eintragen</string>
     <string name="custom_input_info_wrong">Summe der Einzelspieler muss aufgehen</string>
     <string name="custom_input_info_correct">Runde kann hinzugefügt werden</string>
-
 </resources>
