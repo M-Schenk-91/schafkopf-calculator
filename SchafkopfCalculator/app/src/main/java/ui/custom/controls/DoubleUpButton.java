@@ -9,8 +9,11 @@ import android.widget.LinearLayout;
 
 import com.schenk.matthias.schafkopfcalculator.R;
 
+import java.util.ArrayList;
+
 import ui.custom.SchafkopfActivity;
 import ui.custom.controls.fw.SchafkopfButton;
+import ui.interfaces.IDoubleUpListener;
 
 public class DoubleUpButton extends LinearLayout {
 
@@ -19,6 +22,7 @@ public class DoubleUpButton extends LinearLayout {
     private SchafkopfActivity activity;
 
     private int doubleUps = 0;
+    private ArrayList<IDoubleUpListener> listeners = new ArrayList();
     private int maxDoubleUps = Integer.MAX_VALUE;
 
 
@@ -70,6 +74,7 @@ public class DoubleUpButton extends LinearLayout {
             @Override
             public void onClick(View v) {
                 doubleUp();
+                onDoubleUpsChanged();
                 handleUIState();
             }
         });
@@ -78,12 +83,14 @@ public class DoubleUpButton extends LinearLayout {
             @Override
             public void onClick(View v) {
                 clearDoubleUps();
+                onDoubleUpsChanged();
             }
         });
     }
 
     public void clearDoubleUps() {
         doubleUps = 0;
+        onDoubleUpsChanged();
         handleUIState();
     }
 
@@ -92,6 +99,12 @@ public class DoubleUpButton extends LinearLayout {
         if (doubleUps < maxDoubleUps){
             activity.vibrate(50);
             doubleUps++;
+        }
+    }
+
+    private void onDoubleUpsChanged() {
+        for(IDoubleUpListener listener: listeners){
+            listener.onDoubleUp(doubleUps);
         }
     }
 
@@ -110,8 +123,16 @@ public class DoubleUpButton extends LinearLayout {
     public int getDoubleUps() {
         return doubleUps;
     }
+    public void setDoubleUps(int doubleUps) {
+        this.doubleUps = doubleUps;
+        handleUIState();
+    }
 
     public void setMaxDoubleUps(int maxDoubleUps) {
         this.maxDoubleUps = maxDoubleUps;
+    }
+
+    public void addDoubleUpListener(IDoubleUpListener listener){
+        listeners.add(listener);
     }
 }

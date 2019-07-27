@@ -1,6 +1,7 @@
 package ui;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -73,8 +74,15 @@ public class FragmentController {
 
         closeKeyboardIfOpen();
 
+        if(fragment != currentFragment){
+            Fragment oldFragment = mgrFragments.findFragmentByTag(Integer.toString(fragment));
+            if (oldFragment != null) {
+                mgrFragments.beginTransaction().remove(oldFragment).commit();
+            }
+        }
+
         if (!activity.isFinishing()){
-            transaction.replace(R.id.content, getFragment(fragment));
+            transaction.replace(R.id.content, getFragment(fragment), Integer.toString(fragment));
             transaction.addToBackStack(null);
             transaction.commit();
             currentFragment = fragment;

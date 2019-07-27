@@ -11,6 +11,7 @@ public class Game implements Serializable {
 
     private ArrayList<Player> lstPlayers = new ArrayList<>();
     private ArrayList<GameRound> lstRounds = new ArrayList<>();
+    private int currentDoubleUps = 0;
     private GameSettings settigs;
 
     public Game(GameSettings settings) {
@@ -75,5 +76,13 @@ public class Game implements Serializable {
     public void addRounds(ArrayList<GameRound> gameRounds) {
         lstRounds.addAll(gameRounds);
         calculateScore();
+    }
+
+    public void setCurrentDoubleUps(int currentDoubleUps) {
+        this.currentDoubleUps = currentDoubleUps;
+    }
+
+    public int getCurrentDoubleUps() {
+        return currentDoubleUps;
     }
 }

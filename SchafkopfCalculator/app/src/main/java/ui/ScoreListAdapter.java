@@ -3,6 +3,7 @@ package ui;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -35,7 +36,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
     private float TEXT_SIZE_LABEL = 16;
 
     private static class Holder {
-        LinearLayout layout;
+        ConstraintLayout layout;
         TextView lblPlayer1;
         TextView lblPlayer2;
         TextView lblPlayer3;
@@ -76,7 +77,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.list_item_score, parent, false);
 
-            holder.layout = (LinearLayout) convertView.findViewById(R.id.lay_list_item_main);
+            holder.layout = (ConstraintLayout) convertView.findViewById(R.id.container);
             holder.lblPlayer1 = (TextView) convertView.findViewById(R.id.list_item_lbl_score_player_1);
             holder.lblPlayer2 = (TextView) convertView.findViewById(R.id.list_item_lbl_score_player_2);
             holder.lblPlayer3 = (TextView) convertView.findViewById(R.id.list_item_lbl_score_player_3);

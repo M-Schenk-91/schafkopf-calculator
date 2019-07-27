@@ -23,6 +23,7 @@ import ui.custom.controls.DoubleUpButton;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.custom.SchafkopfFragment;
 import ui.fragments.dialog.AddNewRoundDialogFragment;
+import ui.interfaces.IDoubleUpListener;
 import ui.interfaces.IGameFragmentListener;
 import ui.interfaces.IGameListener;
 import ui.ScoreListAdapter;
@@ -33,7 +34,7 @@ import ui.UiUtils;
  * Created by Matthias on 11.01.2018.
  */
 
-public class GameFragment extends SchafkopfFragment implements IGameListener{
+public class GameFragment extends SchafkopfFragment implements IGameListener, IDoubleUpListener {
 
     private TextView lblScorePlayer1, lblScorePlayer2, lblScorePlayer3, lblScorePlayer4, lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4;
     private SchafkopfButton btnAddRound;
@@ -95,6 +96,8 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
                 showAddRoundDialog();
             }
         });
+
+        //btnDoubleUp.addDoubleUpListener(this);
 
         //#OLD
         /*
@@ -159,7 +162,7 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
 
         int maxMultiplicator = game.getSettings().getMaxRoundMultiplicator();
         btnDoubleUp.setMaxDoubleUps(UiUtils.multiplicatorToDoubleUps(maxMultiplicator));
-        btnDoubleUp.clearDoubleUps();
+        btnDoubleUp.setDoubleUps(game.getCurrentDoubleUps());
     }
 
     private void onRoundAdded(GameRound round) {
@@ -237,6 +240,12 @@ public class GameFragment extends SchafkopfFragment implements IGameListener{
     public void onGameRoundsChanged(Game game) {
         this.game = game;
         updateUI();
+        btnDoubleUp.clearDoubleUps();
+    }
+
+    @Override
+    public void onDoubleUp(int doubleUps) {
+        game.setCurrentDoubleUps(doubleUps);
     }
 
     private void updateTotalScore(Game game) {

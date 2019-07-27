@@ -23,6 +23,7 @@ import ui.interfaces.IGameListener;
 public class IOManager {
 
     private static String FILENAME_GAME_SETTINGS = "GameSettings.txt";
+    private static String FILENAME_GAME_STATUS = "GameStatus.txt";
     private static String FILENAME_GAME_ROUNDS = "GameRounds.txt";
 
     public static String NAME_DIRECTORY_CURRENTLY_CACHED_GAME = "cached";
@@ -68,15 +69,19 @@ public class IOManager {
             String pathGameDir = internalStorage.getCanonicalPath() + File.separator + dirName;
 
             String pathSettings = pathGameDir + File.separator + FILENAME_GAME_SETTINGS;
-            String pathData = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
+            String pathStatus = pathGameDir + File.separator + FILENAME_GAME_STATUS;
+            String pathRounds = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
 
             File fileSettings = prepareFile(pathSettings);
-
             fos = new FileOutputStream(fileSettings);
             IOUtils.writeToFile(fos, JSONManager.settingsToJSON(game.getSettings()));
 
-            File fileData = prepareFile(pathData);
+            File fileStatus = prepareFile(pathStatus);
+            fos = new FileOutputStream(fileStatus);
+            //to be expanded
+            IOUtils.writeToFile(fos, JSONManager.statusToJSON(game.getCurrentDoubleUps()));
 
+            File fileData = prepareFile(pathRounds);
             fos = new FileOutputStream(fileData);
             IOUtils.writeToFile(fos, JSONManager.roundsToJSON(game.getLstRounds()));
 
@@ -110,6 +115,7 @@ public class IOManager {
 
             String pathGameDir = internalStorage.getCanonicalPath() + File.separator + dirName;
             String pathSettings = pathGameDir + File.separator + FILENAME_GAME_SETTINGS;
+            String pathStatus = pathGameDir + File.separator + FILENAME_GAME_STATUS;
             String pathData = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
 
             File fileSettings = new File(pathSettings);
@@ -126,6 +132,12 @@ public class IOManager {
             }
 
             result = new Game(settings);
+
+            File fileStatus = new File(pathStatus);
+            if(fileStatus.exists()){
+                fis = new FileInputStream(fileStatus);
+                result.setCurrentDoubleUps(JSONManager.JSONToGameStatus(fis));
+            }
 
             File fileDataRounds = new File(pathData);
 
