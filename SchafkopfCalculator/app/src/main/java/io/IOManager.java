@@ -22,172 +22,183 @@ import ui.interfaces.IGameListener;
 
 public class IOManager {
 
-    private static String FILENAME_GAME_SETTINGS = "GameSettings.txt";
-    private static String FILENAME_GAME_STATUS = "GameStatus.txt";
-    private static String FILENAME_GAME_ROUNDS = "GameRounds.txt";
+   private static String FILENAME_GAME_SETTINGS = "GameSettings.txt";
+   private static String FILENAME_GAME_STATUS = "GameStatus.txt";
+   private static String FILENAME_GAME_ROUNDS = "GameRounds.txt";
 
-    public static String NAME_DIRECTORY_CURRENTLY_CACHED_GAME = "cached";
+   public static String NAME_DIRECTORY_CURRENTLY_CACHED_GAME = "cached";
 
-    private final Context context;
-    private ArrayList<IGameListener> listeners = new ArrayList<>();
+   private final Context context;
+   private ArrayList<IGameListener> listeners = new ArrayList<>();
 
-    public IOManager(Context context) {
-        this.context = context;
-    }
+   public IOManager(Context context) {
+      this.context = context;
+   }
 
-    public void addGameListener(IGameListener listener) {
-        listeners.add(listener);
-    }
+   public void addGameListener(IGameListener listener) {
+      listeners.add(listener);
+   }
 
-    public ArrayList<String> getSavedGameNames() {
-        ArrayList<String> savedGames = new ArrayList<>();
+   public ArrayList<String> getSavedGameNames() {
+      ArrayList<String> savedGames = new ArrayList<>();
 
-        File internalStorage = context.getFilesDir();
+      File internalStorage = context.getFilesDir();
 
-        for (File file : internalStorage.listFiles()) {
+      for (File file : internalStorage.listFiles()) {
 
-            if (!file.isDirectory()) continue;
-            if (file.getName().equals(NAME_DIRECTORY_CURRENTLY_CACHED_GAME)) continue;
+         if (!file.isDirectory()) {
+            continue;
+         }
+         if (file.getName()
+               .equals(NAME_DIRECTORY_CURRENTLY_CACHED_GAME)) {
+            continue;
+         }
 
-            savedGames.add(file.getName());
-        }
+         savedGames.add(file.getName());
+      }
 
-        return savedGames;
-    }
+      return savedGames;
+   }
 
-    public boolean savedGamesExisting() {
-        return getSavedGameNames().size() > 0;
-    }
+   public boolean savedGamesExisting() {
+      return getSavedGameNames().size() > 0;
+   }
 
-    public void saveGame(Game game, String dirName) {
+   public void saveGame(Game game, String dirName) {
 
-        File internalStorage = context.getFilesDir();
-        FileOutputStream fos = null;
+      File internalStorage = context.getFilesDir();
+      FileOutputStream fos = null;
 
-        try {
+      try {
 
-            String pathGameDir = internalStorage.getCanonicalPath() + File.separator + dirName;
+         String pathGameDir = internalStorage.getCanonicalPath() + File.separator + dirName;
 
-            String pathSettings = pathGameDir + File.separator + FILENAME_GAME_SETTINGS;
-            String pathStatus = pathGameDir + File.separator + FILENAME_GAME_STATUS;
-            String pathRounds = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
+         String pathSettings = pathGameDir + File.separator + FILENAME_GAME_SETTINGS;
+         String pathStatus = pathGameDir + File.separator + FILENAME_GAME_STATUS;
+         String pathRounds = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
 
-            File fileSettings = prepareFile(pathSettings);
-            fos = new FileOutputStream(fileSettings);
-            IOUtils.writeToFile(fos, JSONManager.settingsToJSON(game.getSettings()));
+         File fileSettings = prepareFile(pathSettings);
+         fos = new FileOutputStream(fileSettings);
+         IOUtils.writeToFile(fos, JSONManager.settingsToJSON(game.getSettings()));
 
-            File fileStatus = prepareFile(pathStatus);
-            fos = new FileOutputStream(fileStatus);
-            //to be expanded
-            IOUtils.writeToFile(fos, JSONManager.statusToJSON(game.getCurrentDoubleUps()));
+         File fileStatus = prepareFile(pathStatus);
+         fos = new FileOutputStream(fileStatus);
+         //to be expanded
+         IOUtils.writeToFile(fos,
+               JSONManager.statusToJSON(isCache(dirName) ? game.getCurrentDoubleUps() : 0));
 
-            File fileData = prepareFile(pathRounds);
-            fos = new FileOutputStream(fileData);
-            IOUtils.writeToFile(fos, JSONManager.roundsToJSON(game.getLstRounds()));
+         File fileData = prepareFile(pathRounds);
+         fos = new FileOutputStream(fileData);
+         IOUtils.writeToFile(fos, JSONManager.roundsToJSON(game.getLstRounds()));
 
-            fos.close();
+         fos.close();
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
+      } catch (JSONException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+   private boolean isCache(String dirName) {
+      return dirName.equals(NAME_DIRECTORY_CURRENTLY_CACHED_GAME);
+   }
 
-    private File prepareFile(String filePath) throws IOException {
-        File fileSettings = new File(filePath);
-        if (fileSettings.exists()) fileSettings.delete();
+   private File prepareFile(String filePath) throws IOException {
+      File fileSettings = new File(filePath);
+      if (fileSettings.exists()) {
+         fileSettings.delete();
+      }
 
-        fileSettings.getParentFile().mkdirs();
-        fileSettings.createNewFile();
-        return fileSettings;
-    }
+      fileSettings.getParentFile()
+            .mkdirs();
+      fileSettings.createNewFile();
+      return fileSettings;
+   }
 
-    public Game loadGame(String dirName, boolean updateSavedGame) {
-        Game result = null;
+   public Game loadGame(String dirName, boolean updateSavedGame) {
+      Game result = null;
 
-        File internalStorage = context.getFilesDir();
-        FileInputStream fis = null;
+      File internalStorage = context.getFilesDir();
+      FileInputStream fis = null;
 
-        try {
+      try {
 
-            String pathGameDir = internalStorage.getCanonicalPath() + File.separator + dirName;
-            String pathSettings = pathGameDir + File.separator + FILENAME_GAME_SETTINGS;
-            String pathStatus = pathGameDir + File.separator + FILENAME_GAME_STATUS;
-            String pathData = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
+         String pathGameDir = internalStorage.getCanonicalPath() + File.separator + dirName;
+         String pathSettings = pathGameDir + File.separator + FILENAME_GAME_SETTINGS;
+         String pathStatus = pathGameDir + File.separator + FILENAME_GAME_STATUS;
+         String pathData = pathGameDir + File.separator + FILENAME_GAME_ROUNDS;
 
-            File fileSettings = new File(pathSettings);
+         File fileSettings = new File(pathSettings);
 
-            if (!fileSettings.exists()) {
-                return null;
-            }
+         if (!fileSettings.exists()) {
+            return null;
+         }
 
-            fis = new FileInputStream(fileSettings);
-            GameSettings settings = JSONManager.JSONToSettings(fis);
+         fis = new FileInputStream(fileSettings);
+         GameSettings settings = JSONManager.JSONToSettings(fis);
 
-            if (settings == null) {
-                return null;
-            }
+         if (settings == null) {
+            return null;
+         }
 
-            result = new Game(settings);
+         result = new Game(settings);
 
-            File fileStatus = new File(pathStatus);
-            if(fileStatus.exists()){
-                fis = new FileInputStream(fileStatus);
-                result.setCurrentDoubleUps(JSONManager.JSONToGameStatus(fis));
-            }
+         File fileStatus = new File(pathStatus);
+         if (fileStatus.exists()) {
+            fis = new FileInputStream(fileStatus);
+            result.setCurrentDoubleUps(JSONManager.JSONToGameStatus(fis));
+         }
 
-            File fileDataRounds = new File(pathData);
+         File fileDataRounds = new File(pathData);
 
-            if (!fileDataRounds.exists()) {
-                return null;
-            }
+         if (!fileDataRounds.exists()) {
+            return null;
+         }
 
-            fis = new FileInputStream(fileDataRounds);
-            ArrayList<GameRound> gameRounds = JSONManager.JSONToRoundData(fis);
+         fis = new FileInputStream(fileDataRounds);
+         ArrayList<GameRound> gameRounds = JSONManager.JSONToRoundData(fis);
 
-            if (gameRounds == null) {
-                return null;
-            }
+         if (gameRounds == null) {
+            return null;
+         }
 
-            result.addRounds(gameRounds);
+         result.addRounds(gameRounds);
 
-            fis.close();
+         fis.close();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+      boolean cached = dirName.equals(NAME_DIRECTORY_CURRENTLY_CACHED_GAME);
 
-        boolean cached = dirName.equals(NAME_DIRECTORY_CURRENTLY_CACHED_GAME);
+      String loadingMessage = "";
 
-        String loadingMessage = "";
+      if (updateSavedGame) {
+         loadingMessage = updateSavedGame(result);
+      }
 
-        if(updateSavedGame){
-            loadingMessage = updateSavedGame(result);
-        }
+      onGameLoaded(result, cached, loadingMessage);
+      return result;
+   }
 
-        onGameLoaded(result, cached, loadingMessage);
-        return result;
-    }
+   private String updateSavedGame(Game result) {
+      SaveGameUpdater updater = SaveGameUpdater.getInstance();
 
-    private String updateSavedGame(Game result) {
-        SaveGameUpdater updater = SaveGameUpdater.getInstance();
+      try {
+         updater.update(result);
+      } catch (DataException e) {
+         e.printStackTrace();
+         return e.getMessage();
+      }
 
-        try {
-            updater.update(result);
-        } catch (DataException e) {
-            e.printStackTrace();
-            return e.getMessage();
-        }
+      return "";
+   }
 
-        return "";
-    }
-
-    private void onGameLoaded(Game result, boolean cached, String loadingMessage) {
-        for (IGameListener l : listeners) {
-            l.onGameCreated(result, false, cached, loadingMessage);
-        }
-    }
+   private void onGameLoaded(Game result, boolean cached, String loadingMessage) {
+      for (IGameListener l : listeners) {
+         l.onGameCreated(result, false, cached, loadingMessage);
+      }
+   }
 }

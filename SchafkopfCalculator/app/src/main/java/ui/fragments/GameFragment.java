@@ -97,7 +97,7 @@ public class GameFragment extends SchafkopfFragment implements IGameListener, ID
             }
         });
 
-        //btnDoubleUp.addDoubleUpListener(this);
+        btnDoubleUp.addDoubleUpListener(this);
 
         //#OLD
         /*
@@ -240,12 +240,18 @@ public class GameFragment extends SchafkopfFragment implements IGameListener, ID
     public void onGameRoundsChanged(Game game) {
         this.game = game;
         updateUI();
+        clearDoubleUps();
+    }
+
+    private void clearDoubleUps() {
         btnDoubleUp.clearDoubleUps();
+        GameController.getActiveGame().setCurrentDoubleUps(0);
+
     }
 
     @Override
     public void onDoubleUp(int doubleUps) {
-        game.setCurrentDoubleUps(doubleUps);
+        GameController.getActiveGame().setCurrentDoubleUps(doubleUps);
     }
 
     private void updateTotalScore(Game game) {

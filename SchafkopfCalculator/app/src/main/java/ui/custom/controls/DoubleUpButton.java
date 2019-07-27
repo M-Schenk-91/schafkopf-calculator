@@ -90,7 +90,6 @@ public class DoubleUpButton extends LinearLayout {
 
     public void clearDoubleUps() {
         doubleUps = 0;
-        onDoubleUpsChanged();
         handleUIState();
     }
 

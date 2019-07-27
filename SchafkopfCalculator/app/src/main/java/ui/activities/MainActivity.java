@@ -190,7 +190,7 @@ public class MainActivity extends SchafkopfActivity
       gameAvailable = true;
       mgrGame.setActiveGame(game);
       switchToGameFragment(cached);
-      
+
       if (!newGame && !cached) {
          showToast(getResources().getString(R.string.loaded));
       }
