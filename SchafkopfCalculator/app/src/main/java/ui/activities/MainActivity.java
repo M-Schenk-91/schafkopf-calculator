@@ -2,6 +2,7 @@ package ui.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,8 +35,8 @@ public class MainActivity extends SchafkopfActivity
    private FragmentController mgrFragments;
    private GameController mgrGame;
    private IOManager mgrIO;
-   private DrawerLayout drawerLayout;
-   private NavigationView navigationView;
+   //private DrawerLayout drawerLayout;
+   private BottomNavigationView navigationView;
    private Toolbar toolbar;
    private ActionBarDrawerToggle drawerToggle;
    private boolean paused = false;
@@ -44,6 +45,9 @@ public class MainActivity extends SchafkopfActivity
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
+
+      setTheme(R.style.AppTheme);
+
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
@@ -64,8 +68,8 @@ public class MainActivity extends SchafkopfActivity
       setSupportActionBar(toolbar);
       toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-      drawerToggle = setupDrawerToggle();
-      drawerLayout.addDrawerListener(drawerToggle);
+      //drawerToggle = setupDrawerToggle();
+      //drawerLayout.addDrawerListener(drawerToggle);
 
       mgrFragments.setFragment(FragmentController.FRAGMENT_GAME_SETUP, false);
       MenuItem itemSetup = navigationView.getMenu()
@@ -140,8 +144,8 @@ public class MainActivity extends SchafkopfActivity
       ((GameSetupFragment) mgrFragments.getFragment(
             FragmentController.FRAGMENT_GAME_SETUP)).addGameSettingsListener(this);
 
-      navigationView.setNavigationItemSelectedListener(
-            new NavigationView.OnNavigationItemSelectedListener() {
+      navigationView.setOnNavigationItemSelectedListener(
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
                @Override
                public boolean onNavigationItemSelected(MenuItem menuItem) {
                   switch (menuItem.getItemId()) {
@@ -158,15 +162,15 @@ public class MainActivity extends SchafkopfActivity
 
                   setMenuItemChecked(menuItem);
                   setTitle(menuItem.getTitle());
-                  drawerLayout.closeDrawers();
+                  //drawerLayout.closeDrawers();
                   return true;
                }
             });
    }
 
    private void findControls() {
-      drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-      navigationView = (NavigationView) findViewById(R.id.navigation);
+      //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+      navigationView = (BottomNavigationView) findViewById(R.id.navigation);
       toolbar = (Toolbar) findViewById(R.id.toolbar);
    }
 
@@ -230,10 +234,11 @@ public class MainActivity extends SchafkopfActivity
 
    @Override
    public boolean onOptionsItemSelected(MenuItem item) {
+      /*
       if (drawerToggle.onOptionsItemSelected(item)) {
          return true;
       }
-
+*/
       switch (item.getItemId()) {
          case R.id.action_save:
             if (gameAvailable) {
@@ -268,7 +273,7 @@ public class MainActivity extends SchafkopfActivity
       SaveGameDialogFragment saveGameDialogFragment = new SaveGameDialogFragment();
       saveGameDialogFragment.show(getSupportFragmentManager(), "save");
    }
-
+/*
    private ActionBarDrawerToggle setupDrawerToggle() {
       return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
             R.string.drawer_close);
@@ -285,7 +290,7 @@ public class MainActivity extends SchafkopfActivity
       super.onConfigurationChanged(newConfig);
       drawerToggle.onConfigurationChanged(newConfig);
    }
-
+*/
    public void setMenuItemChecked(MenuItem menuItem) {
       //uncheck all
       int size = navigationView.getMenu()
