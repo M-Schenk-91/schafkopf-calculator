@@ -34,4 +34,9 @@
     <string name="custom_input_info">Änderung in cent für diese Runde eintragen</string>
     <string name="custom_input_info_wrong">Summe der Einzelspieler muss aufgehen</string>
     <string name="custom_input_info_correct">Runde kann hinzugefügt werden</string>
+   <string name="rate_me_text">Gefällt dir Schwachkopf? Dann nimm dir doch einen Moment um die App zu bewerten. Danke für deine Unterstützung!</string>
+    <string name="text_button_rate">Schwachkopf bewerten</string>
+    <string name="text_button_rate_remind_me">Später erinnern</string>
+    <string name="text_button_rate_never">Nein danke</string>
+    <string name="rateme_dialog_title">Schwachkopf bewerten</string>
 </resources>

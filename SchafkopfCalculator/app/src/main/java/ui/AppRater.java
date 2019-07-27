@@ -1,36 +1,37 @@
 package ui;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import com.schenk.matthias.schafkopfcalculator.R;
 
 public class AppRater {
-   private final static int DAYS_UNTIL_PROMPT = 0;//Min number of days
-   private final static int LAUNCHES_UNTIL_PROMPT = 1;//Min number of launches
+   private final static int DAYS_UNTIL_PROMPT = 7;//Min number of days
+   private final static int LAUNCHES_UNTIL_PROMPT = 3;//Min number of launches
    private static AppRater instance;
    private static Context context;
 
-   public AppRater(Context context){
+   public AppRater(Context context) {
       this.context = context;
    }
 
-   public static AppRater getInstance(Context mContext){
-      if(instance == null) instance = new AppRater(mContext);
+   public static AppRater getInstance(Context mContext) {
+      if (instance == null) {
+         instance = new AppRater(mContext);
+      }
       context = mContext;
       return instance;
    }
 
    public void app_launched() {
       SharedPreferences prefs = context.getSharedPreferences("apprater", 0);
-      if (prefs.getBoolean("dontshowagain", false)) { return ; }
+      if (prefs.getBoolean("dontshowagain", false)) {
+         return;
+      }
 
       SharedPreferences.Editor editor = prefs.edit();
 
@@ -47,8 +48,8 @@ public class AppRater {
 
       // Wait at least n days before opening
       if (launch_count >= LAUNCHES_UNTIL_PROMPT) {
-         if (System.currentTimeMillis() >= date_firstLaunch +
-               (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
+         if (System.currentTimeMillis() >=
+               date_firstLaunch + (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
             showRateDialog(editor);
          }
       }
@@ -57,55 +58,41 @@ public class AppRater {
    }
 
    public void showRateDialog(final SharedPreferences.Editor editor) {
-
-      String APP_TITLE = context.getString(R.string.app_name);
       final String APP_PNAME = context.getPackageName();
+      AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+      alertDialog.setTitle(context.getString(R.string.rateme_dialog_title));
+      alertDialog.setMessage(context.getString(R.string.rate_me_text));
+      alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,
+            context.getString(R.string.text_button_rate), new DialogInterface.OnClickListener() {
 
-      final Dialog dialog = new Dialog(context);
-      dialog.setTitle("Rate " + APP_TITLE);
+               public void onClick(DialogInterface dialog, int id) {
+                  context.startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=" + APP_PNAME)));
+                  dialog.dismiss();
+               }
+            });
 
-      LinearLayout ll = new LinearLayout(context);
-      ll.setOrientation(LinearLayout.VERTICAL);
+      alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,
+            context.getString(R.string.text_button_rate_remind_me),
+            new DialogInterface.OnClickListener() {
 
-      TextView tv = new TextView(context);
-      tv.setText("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. Thanks for your support!");
-      tv.setWidth(240);
-      tv.setPadding(4, 0, 4, 10);
-      ll.addView(tv);
+               public void onClick(DialogInterface dialog, int id) {
+                  dialog.dismiss();
+               }
+            });
 
-      Button b1 = new Button(context);
-      b1.setText("Rate " + APP_TITLE);
-      b1.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
-            dialog.dismiss();
-         }
-      });
-      ll.addView(b1);
+      alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL,
+            context.getString(R.string.text_button_rate_never),
+            new DialogInterface.OnClickListener() {
 
-      Button b2 = new Button(context);
-      b2.setText("Remind me later");
-      b2.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            dialog.dismiss();
-         }
-      });
-      ll.addView(b2);
-
-      Button b3 = new Button(context);
-      b3.setText("No, thanks");
-      b3.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            if (editor != null) {
-               editor.putBoolean("dontshowagain", true);
-               editor.commit();
-            }
-            dialog.dismiss();
-         }
-      });
-      ll.addView(b3);
-
-      dialog.setContentView(ll);
-      dialog.show();
+               public void onClick(DialogInterface dialog, int id) {
+                  if (editor != null) {
+                     editor.putBoolean("dontshowagain", true);
+                     editor.commit();
+                  }
+                  dialog.dismiss();
+               }
+            });
+      alertDialog.show();
    }
 }
