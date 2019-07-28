@@ -1,5 +1,6 @@
 package ui.fragments.dialog;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import game.Game;
 import game.GameController;
 import game.GameRound;
+import ui.AppColors;
 import ui.custom.controls.fw.SchafkopfToggleButton;
 import ui.interfaces.IRoundDialogListener;
 
@@ -71,6 +73,12 @@ public class ChooseWinnerFragment extends Fragment {
             lstTogglesWinner.get(i).setText(activeGame.getLstPlayers().get(i).getName());
             lstTogglesWinner.get(i).setTextOff(activeGame.getLstPlayers().get(i).getName());
             lstTogglesWinner.get(i).setTextOn(activeGame.getLstPlayers().get(i).getName());
+
+            GradientDrawable shape =  new GradientDrawable();
+            shape.setCornerRadius( 16 );
+            shape.setColor(AppColors.PLAYER_COLORS[i]);
+
+            lstTogglesWinner.get(i).setBackground(shape);
         }
     }
 

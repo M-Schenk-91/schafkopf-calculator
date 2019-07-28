@@ -63,13 +63,16 @@ class CurrentGameModeAdapter(
       }
       lastPosition = position
 
+      var color = context.resources.getColor(R.color.colorPrimary)
       if(dataSet[position].name == GameController.ID_GAME_MODE_CUSTOM){
-         val shape = GradientDrawable()
-         shape.cornerRadius = 16f
-         shape.setColor(Color.GRAY)
-         viewHolder.btnMode!!.background = shape
+         color = Color.GRAY
       }
 
+      val shape = GradientDrawable()
+      shape.cornerRadius = 16f
+      shape.setColor(color)
+
+      viewHolder.btnMode!!.background = shape
       viewHolder.btnMode!!.text = dataModel!!.name
       viewHolder.btnMode!!.tag = position
       viewHolder.btnMode!!.setOnClickListener(this)

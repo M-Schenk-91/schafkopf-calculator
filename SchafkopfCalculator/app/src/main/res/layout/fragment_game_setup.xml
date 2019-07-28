@@ -321,7 +321,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:text="Tarife"
+                                android:text="Tarif"
                                 android:textColor="@color/white"
                                 android:textSize="20sp" />
 

@@ -35,7 +35,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
     private int lastPosition = -1;
     private float TEXT_SIZE_LABEL = 16;
 
-    private static class Holder {
+    private static class ScoreHolder {
         ConstraintLayout layout;
         TextView lblPlayer1;
         TextView lblPlayer2;
@@ -54,7 +54,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
 
     @Override
     public boolean onLongClick(View v) {
-        int position = (Integer) v.getTag();
+        int position = (Integer) getLis
 
         DeleteRoundDialogFragment frDeleteRound = new DeleteRoundDialogFragment();
 
@@ -69,11 +69,11 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GameRound data = getItem(position);
-        Holder holder;
+        ScoreHolder holder;
         final View result;
 
         if (convertView == null) {
-            holder = new Holder();
+            holder = new ScoreHolder();
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.list_item_score, parent, false);
 
@@ -87,7 +87,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
             result = convertView;
             convertView.setTag(holder);
         } else {
-            holder = (Holder) convertView.getTag();
+            holder = (ScoreHolder) convertView.getTag();
             result = convertView;
         }
 

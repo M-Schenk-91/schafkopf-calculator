@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.EditText
 import com.schenk.matthias.schafkopfcalculator.R
+import game.GameController
 import game.GameMode
 
 class GameModeAdapter(
@@ -76,6 +77,10 @@ class GameModeAdapter(
          viewHolder = convertView.tag as ViewHolder
       }
       lastPosition = position
+
+      if(dataSet[position].name == GameController.ID_GAME_MODE_DEFAULT || dataSet[position].name == GameController.ID_GAME_MODE_SOLO){
+         viewHolder.cbxActive!!.isEnabled = false
+      }
 
       viewHolder.cbxActive!!.text = dataModel!!.name
       viewHolder.cbxActive!!.isChecked = dataModel.isActive
