@@ -46,6 +46,7 @@ public class JSONManager {
          objMode.put("name", mode.getName());
          objMode.put("value", mode.getValue());
          objMode.put("solo", mode.isSolo());
+         objMode.put("active", mode.isActive());
 
          objGameModes.put(objMode);
       }
@@ -257,7 +258,7 @@ public class JSONManager {
       String modeName = "";
       int value = 0;
       boolean solo = false;
-      boolean active = false;
+      boolean active = true;
 
       reader.beginObject();
       while (reader.hasNext()) {

@@ -176,7 +176,7 @@ public class IOManager {
       String loadingMessage = "";
 
       if (updateSavedGame) {
-         loadingMessage = updateSavedGame(result);
+         //loadingMessage = updateSavedGame(result);
       }
 
       onGameLoaded(result, cached, loadingMessage);
@@ -184,7 +184,7 @@ public class IOManager {
    }
 
    private String updateSavedGame(Game result) {
-      SaveGameUpdater updater = SaveGameUpdater.getInstance();
+      SaveGameStructureUpdater updater = SaveGameStructureUpdater.getInstance();
 
       try {
          updater.update(result);

@@ -27,7 +27,7 @@ import ui.fragments.dialog.DeleteRoundDialogFragment;
  * Created by Matze on 03.02.2018.
  */
 
-public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.OnLongClickListener {
+public class ScoreListAdapter extends ArrayAdapter<GameRound> {
 
     private final FragmentManager frManager;
     private ArrayList<GameRound> data;
@@ -52,18 +52,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
     }
 
 
-    @Override
-    public boolean onLongClick(View v) {
-        int position = (Integer) getLis
 
-        DeleteRoundDialogFragment frDeleteRound = new DeleteRoundDialogFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        frDeleteRound.setArguments(bundle);
-        frDeleteRound.show(frManager, "detail");
-        return true;
-    }
 
 
     @Override
@@ -71,6 +60,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
         GameRound data = getItem(position);
         ScoreHolder holder;
         final View result;
+        final int pos = position;
 
         if (convertView == null) {
             holder = new ScoreHolder();
@@ -125,8 +115,18 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
         holder.lblDetails.setText(data.toString());
         holder.lblDetails.setTextColor(AppColors.getScoreTextColor(0, grayoutText, false, false));
 
-        holder.layout.setOnLongClickListener(this);
-        holder.layout.setTag(position);
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                DeleteRoundDialogFragment frDeleteRound = new DeleteRoundDialogFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", pos);
+                frDeleteRound.setArguments(bundle);
+                frDeleteRound.show(frManager, "detail");
+                return true;
+            }
+        });
         return convertView;
     }
 

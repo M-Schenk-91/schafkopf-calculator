@@ -305,6 +305,11 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       if (Statistics.solos > 0) entries.add(PieEntry(Statistics.solos.toFloat(), "Solo"))
       if (Statistics.wenzen > 0) entries.add(PieEntry(Statistics.wenzen.toFloat(), "Wenz"))
       if (Statistics.ramsch > 0) entries.add(PieEntry(Statistics.ramsch.toFloat(), "Ramsch"))
+      if (Statistics.geier > 0) entries.add(PieEntry(Statistics.geier.toFloat(), "Geier"))
+      if (Statistics.wedding > 0) entries.add(PieEntry(Statistics.wedding.toFloat(), "Hochzeit"))
+      if (Statistics.coloredWenz > 0) entries.add(PieEntry(Statistics.coloredWenz.toFloat(), "Farbwenz"))
+      if (Statistics.coloredGeier > 0) entries.add(PieEntry(Statistics.coloredGeier.toFloat(), "Farbgeier"))
+      if (Statistics.bettel > 0) entries.add(PieEntry(Statistics.bettel.toFloat(), "Bettel"))
       if (Statistics.customGames > 0) entries.add(
             PieEntry(
                   Statistics.customGames.toFloat(),
