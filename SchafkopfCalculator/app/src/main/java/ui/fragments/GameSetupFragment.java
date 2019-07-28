@@ -3,6 +3,7 @@ package ui.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +11,22 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.schenk.matthias.schafkopfcalculator.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import game.Game;
 import game.GameController;
 import game.GameMode;
 import game.GameSettings;
 import ui.AppColors;
+import ui.GameModeAdapter;
 import ui.UiUtils;
+import ui.custom.controls.ListViewForEmbeddingInScrollView;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.custom.SchafkopfFragment;
 import ui.interfaces.IGameSettingsFragmentListener;
@@ -38,14 +43,15 @@ public class GameSetupFragment extends SchafkopfFragment {
     private ArrayList<EditText> nameFileds = new ArrayList<>();
     private SchafkopfButton btnCreateNewGame;
     private ArrayList<IGameSettingsFragmentListener> lstGameSettingsListeners = new ArrayList<>();
-    private CheckBox cbxNormalGame, cbxSolo;
     private boolean settingsValid = true;
     private GameSettings settings = new GameSettings(5, 5, 5);
-    private ScrollView scrollViewMain;
+    private NestedScrollView scrollViewMain;
     private boolean uiCreated = false;
     private LinearLayout layPlayers;
     private LinearLayout layGames;
     private LinearLayout layValues;
+    private ListViewForEmbeddingInScrollView lstGameModeSelection;
+    GameModeAdapter adapter;
 
 
     public GameSetupFragment() {}
@@ -67,8 +73,14 @@ public class GameSetupFragment extends SchafkopfFragment {
     }
 
     private void init() {
-        cbxNormalGame.setChecked(true);
-        cbxSolo.setChecked(true);
+        if(getContext() != null){
+            ArrayList<GameMode> modes = new ArrayList<GameMode>(GameController.getInstance()
+                  .getHmAvailableModes()
+                  .values());
+            modes.remove(GameController.getInstance().getHmAvailableModes().get(GameController.ID_GAME_MODE_CUSTOM));
+            adapter = new GameModeAdapter(modes, getContext());
+            lstGameModeSelection.setAdapter(adapter);
+        }
 
         Game game = GameController.getInstance().getActiveGame();
         if(game != null) update(game);
@@ -86,22 +98,6 @@ public class GameSetupFragment extends SchafkopfFragment {
                 }
             }
         });
-
-        cbxNormalGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cbxNormalGame.setChecked(true);
-            }
-        });
-
-        cbxSolo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cbxSolo.setChecked(true);
-            }
-        });
-
-
     }
 
     private void openConfirmationDialog() {
@@ -140,11 +136,7 @@ public class GameSetupFragment extends SchafkopfFragment {
         txtNamePlayer4 = (EditText) view.findViewById(R.id.edt_player_4);
         nameFileds.add(txtNamePlayer4);
 
-        cbxNormalGame = (CheckBox) view.findViewById(R.id.cbx_normal_game);
-        cbxSolo = (CheckBox) view.findViewById(R.id.cbx_solo);
-
-        edtNormalGame = (EditText) view.findViewById(R.id.edt_normal_game);
-        edtSolo = (EditText) view.findViewById(R.id.edt_solo);
+        lstGameModeSelection = view.findViewById(R.id.lst_game_mode_selection);
 
         edtSchneider = (EditText) view.findViewById(R.id.edt_schneider);
         edtSchwarz = (EditText) view.findViewById(R.id.edt_schwarz);
@@ -152,7 +144,7 @@ public class GameSetupFragment extends SchafkopfFragment {
 
         btnCreateNewGame = (SchafkopfButton) view.findViewById(R.id.button_create_new_game);
 
-        scrollViewMain = (ScrollView) view.findViewById(R.id.scrl_main);
+        scrollViewMain = view.findViewById(R.id.scrl_main);
 
         layPlayers = (LinearLayout) view.findViewById(R.id.lay_edit_payer_names);
         layGames = (LinearLayout) view.findViewById(R.id.lay_select_games);
@@ -181,8 +173,14 @@ public class GameSetupFragment extends SchafkopfFragment {
 
         settings = new GameSettings(valSchneider, valSchwarz, valLauf);
         settings.setLstPlayerNames(getPlayerNames(settings.getNumPlayers()));
-        settings.setGameModes(getGameModes());
 
+        ArrayList<GameMode> list = getGameModes();
+        for (Iterator<GameMode> it = list.iterator(); it.hasNext();) {
+            if (!it.next().isActive())
+                it.remove(); // NOTE: Iterator's remove method, not ArrayList's, is used.
+        }
+
+        settings.setGameModes(list);
         onGameSettingsConfirmed(settings);
     }
 
@@ -207,38 +205,8 @@ public class GameSetupFragment extends SchafkopfFragment {
 
     private ArrayList<GameMode> getGameModes() {
         GameController controller = GameController.getInstance();
-        ArrayList<GameMode> modes = new ArrayList<>();
-
-        for (String id : controller.getHmAvailableModes().keySet()) {
-            switch (id) {
-                case GameController.ID_GAME_MODE_DEFAULT:
-                    GameMode modeDefault = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_DEFAULT);
-                    modeDefault.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
-                    modes.add(modeDefault);
-                    break;
-                case GameController.ID_GAME_MODE_SOLO:
-                    GameMode modeSolo = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_SOLO);
-                    modeSolo.setValue(checkValidityAndGetIntValue(edtSolo.getText().toString()));
-                    modes.add(modeSolo);
-                    break;
-                case GameController.ID_GAME_MODE_WENZ:
-                    GameMode modeWenz = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_WENZ);
-                    modeWenz.setValue(checkValidityAndGetIntValue(edtSolo.getText().toString()));
-                    modes.add(modeWenz);
-                    break;
-                case GameController.ID_GAME_MODE_RAMSCH:
-                    GameMode modeRamsch = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_RAMSCH);
-                    modeRamsch.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
-                    modes.add(modeRamsch);
-                    break;
-                case GameController.ID_GAME_MODE_CUSTOM:
-                    GameMode modeCustom = controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_CUSTOM);
-                    modeCustom.setValue(checkValidityAndGetIntValue(edtNormalGame.getText().toString()));
-                    modes.add(modeCustom);
-                    break;
-            }
-        }
-
+        ArrayList<GameMode> modes = adapter.getDataSet();
+        modes.add(controller.getHmAvailableModes().get(GameController.ID_GAME_MODE_CUSTOM));
         return modes;
     }
 
@@ -278,12 +246,6 @@ public class GameSetupFragment extends SchafkopfFragment {
         for (int i = 0; i < settings.getNumPlayers(); i++) {
             nameFileds.get(i).setText(settings.getLstPlayerNames()[i]);
         }
-
-        GameMode modeDefault = settings.getGameMode(GameController.ID_GAME_MODE_DEFAULT);
-        GameMode modeSolo = settings.getGameMode(GameController.ID_GAME_MODE_SOLO);
-
-        if(modeDefault != null) edtNormalGame.setText("" + modeDefault.getValue());
-        if(modeSolo != null) edtSolo.setText("" + modeSolo.getValue());
 
         edtSchneider.setText("" + settings.getValueSchneider());
         edtSchwarz.setText("" + settings.getValueSchwarz());

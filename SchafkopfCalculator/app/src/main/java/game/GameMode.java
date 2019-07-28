@@ -11,11 +11,13 @@ public class GameMode implements Serializable {
     private String name = "Spielmodus";
     private int value = 0;
     private boolean solo = false;
+    private boolean isActive;
 
-    public GameMode(String name, int value, boolean isSolo) {
+    public GameMode(String name, int value, boolean isSolo, boolean isActive) {
         this.name = name;
         this.value = value;
         this.solo = isSolo;
+        this.isActive = isActive;
     }
 
     public void setName(String name) {
@@ -40,5 +42,13 @@ public class GameMode implements Serializable {
 
     public int getValue() {
         return value;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import ui.interfaces.IGameListener;
 
@@ -17,9 +18,10 @@ public class GameController {
     public static final String ID_GAME_MODE_SOLO = "Solo";
     public static final String ID_GAME_MODE_WENZ = "Wenz";
     public static final String ID_GAME_MODE_RAMSCH = "Ramsch";
+    public static final String ID_GAME_MODE_GEIER = "Geier";
     public static final String ID_GAME_MODE_CUSTOM = "Manuelle Eingabe";
 
-    private HashMap<String, GameMode> hmAvailableModes = new HashMap<>();
+    private LinkedHashMap<String, GameMode> hmAvailableModes = new LinkedHashMap<>();
     private ArrayList<IGameListener> listeners = new ArrayList<>();
     private static Game activeGame;
 
@@ -32,11 +34,12 @@ public class GameController {
     }
 
     private void initGameModes() {
-        hmAvailableModes.put(ID_GAME_MODE_DEFAULT, new GameMode(ID_GAME_MODE_DEFAULT, 10, false));
-        hmAvailableModes.put(ID_GAME_MODE_SOLO, new GameMode(ID_GAME_MODE_SOLO, 20, true));
-        hmAvailableModes.put(ID_GAME_MODE_WENZ, new GameMode(ID_GAME_MODE_WENZ, 20, true));
-        hmAvailableModes.put(ID_GAME_MODE_RAMSCH, new GameMode(ID_GAME_MODE_RAMSCH, 10, true));
-        hmAvailableModes.put(ID_GAME_MODE_CUSTOM, new GameMode(ID_GAME_MODE_CUSTOM, 10, false));
+        hmAvailableModes.put(ID_GAME_MODE_DEFAULT, new GameMode(ID_GAME_MODE_DEFAULT, 10, false, true));
+        hmAvailableModes.put(ID_GAME_MODE_SOLO, new GameMode(ID_GAME_MODE_SOLO, 20, true, true ));
+        hmAvailableModes.put(ID_GAME_MODE_WENZ, new GameMode(ID_GAME_MODE_WENZ, 20, true, true));
+        hmAvailableModes.put(ID_GAME_MODE_GEIER, new GameMode(ID_GAME_MODE_GEIER, 20, true, false));
+        hmAvailableModes.put(ID_GAME_MODE_RAMSCH, new GameMode(ID_GAME_MODE_RAMSCH, 10, true, false));
+        hmAvailableModes.put(ID_GAME_MODE_CUSTOM, new GameMode(ID_GAME_MODE_CUSTOM, 10, false, true));
     }
 
     public static GameController getInstance() {
@@ -59,7 +62,7 @@ public class GameController {
         }
     }
 
-    public HashMap<String, GameMode> getHmAvailableModes() {
+    public LinkedHashMap<String, GameMode> getHmAvailableModes() {
         return hmAvailableModes;
     }
 

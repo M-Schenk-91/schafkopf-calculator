@@ -151,6 +151,4 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
             });
         }
     }
-
-
 }

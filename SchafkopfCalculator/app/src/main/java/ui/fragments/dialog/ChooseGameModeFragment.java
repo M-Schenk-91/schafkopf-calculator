@@ -6,18 +6,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.schenk.matthias.schafkopfcalculator.R;
 
 import game.GameController;
 import game.GameMode;
 import ui.AppColors;
+import ui.CurrentGameModeAdapter;
 import ui.custom.controls.fw.SchafkopfButton;
 import ui.interfaces.IRoundDialogListener;
 
 public class ChooseGameModeFragment extends Fragment {
 
     private IRoundDialogListener listener;
+    private ListView lstCurrentGameModes;
+    private CurrentGameModeAdapter adapter;
 
     public void addRoundDialogListener(IRoundDialogListener l){
         listener = l;
@@ -33,6 +38,11 @@ public class ChooseGameModeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        lstCurrentGameModes = view.findViewById(R.id.lst_current_game_modes);
+        adapter = new CurrentGameModeAdapter(GameController.getActiveGame().getSettings().getLstModes(), view.getContext(), listener);
+        lstCurrentGameModes.setAdapter(adapter);
+
+        /*
         SchafkopfButton btnNormalGame = (SchafkopfButton) view.findViewById(R.id.btn_normal_game);
         btnNormalGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,5 +93,6 @@ public class ChooseGameModeFragment extends Fragment {
                 listener.onPhaseCompleted(AddNewRoundDialogFragment.PHASE_CHOOSE_GAME_MODE, true);
             }
         });
+        */
     }
 }
