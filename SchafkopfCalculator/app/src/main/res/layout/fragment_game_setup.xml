@@ -22,7 +22,7 @@
            app:layout_constraintLeft_toLeftOf="parent"
            app:layout_constraintRight_toRightOf="parent" />
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/scrl_main"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -271,91 +271,17 @@
                                 android:text="Spiele"
                                 android:textColor="@color/white"
                                 android:textSize="20sp" />
-
-
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
-                            <CheckBox
-                                android:id="@+id/cbx_normal_game"
-                                android:layout_width="200dp"
-                                android:enabled="false"
-
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:checked="true"
-                                android:text="Sauspiel/Ramsch" />
-
-                            <EditText
-                                android:id="@+id/edt_normal_game"
-                                android:layout_width="60dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="4"
-                                android:selectAllOnFocus="true"
-                                android:text="10" />
-
-                            <TextView
-                                android:id="@+id/lbl_cent_1"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="cent"
-                                android:textAlignment="center" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
-                            <CheckBox
-                                android:id="@+id/cbx_solo"
-                                android:layout_width="200dp"
-                                android:enabled="false"
-                                android:checked="true"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:text="Solo/Wenz" />
-
-                            <EditText
-                                android:id="@+id/edt_solo"
-                                android:layout_width="60dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="4"
-                                android:selectAllOnFocus="true"
-                                android:text="20" />
-
-                            <TextView
-                                android:id="@+id/lbl_cent_2"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="cent"
-                                android:textAlignment="center" />
-
-                        </LinearLayout>
+                        <ui.custom.controls.ListViewForEmbeddingInScrollView
+                           android:id="@+id/lst_game_mode_selection"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:divider="@null"
+                           android:dividerHeight="0dp">
+                        </ui.custom.controls.ListViewForEmbeddingInScrollView>
 
                     </LinearLayout>
-
 
                 </android.support.v7.widget.CardView>
 
@@ -372,7 +298,6 @@
                     android:layout_marginTop="8dp"
                     card_view:cardCornerRadius="4dp"
                     card_view:cardPreventCornerOverlap="false">
-
 
                     <LinearLayout
                         android:id="@+id/lay_select_global_values"
@@ -396,7 +321,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:text="Tarife"
+                                android:text="Tarif"
                                 android:textColor="@color/white"
                                 android:textSize="20sp" />
 
@@ -822,7 +747,7 @@
                     </android.support.v7.widget.CardView>
 -->
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
     </android.support.constraint.ConstraintLayout>
 

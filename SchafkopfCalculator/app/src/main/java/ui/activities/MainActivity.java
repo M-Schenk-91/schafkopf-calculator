@@ -1,16 +1,12 @@
 package ui.activities;
 
-import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +17,7 @@ import game.GameController;
 import game.GameSettings;
 import game.Statistics;
 import io.IOManager;
-import io.SaveGameUpdater;
+import io.SaveGameStructureUpdater;
 import ui.AppRater;
 import ui.FragmentController;
 import ui.custom.SchafkopfActivity;
@@ -43,7 +39,7 @@ public class MainActivity extends SchafkopfActivity
    private Toolbar toolbar;
    private ActionBarDrawerToggle drawerToggle;
    private boolean paused = false;
-   private SaveGameUpdater saveGameUpdater;
+   private SaveGameStructureUpdater saveGameStructureUpdater;
    private boolean cachedGameUpdated = false;
    private TextView toolbarTitle;
    private ImageView toolBarImage;
@@ -58,7 +54,7 @@ public class MainActivity extends SchafkopfActivity
 
       findControls();
       init();
-      initUpdates();
+      //initUpdates();
       listeners();
 
       AppRater.getInstance(this)
@@ -94,8 +90,8 @@ public class MainActivity extends SchafkopfActivity
    }
 
    private void initUpdates() {
-      saveGameUpdater = SaveGameUpdater.getInstance();
-      saveGameUpdater.setGameModeUpdate(mgrGame.getHmAvailableModes());
+      saveGameStructureUpdater = SaveGameStructureUpdater.getInstance();
+      saveGameStructureUpdater.setGameModeUpdate(mgrGame.getHmAvailableModes());
    }
 
    @Override

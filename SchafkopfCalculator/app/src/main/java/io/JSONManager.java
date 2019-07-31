@@ -46,6 +46,7 @@ public class JSONManager {
          objMode.put("name", mode.getName());
          objMode.put("value", mode.getValue());
          objMode.put("solo", mode.isSolo());
+         objMode.put("active", mode.isActive());
 
          objGameModes.put(objMode);
       }
@@ -257,6 +258,7 @@ public class JSONManager {
       String modeName = "";
       int value = 0;
       boolean solo = false;
+      boolean active = true;
 
       reader.beginObject();
       while (reader.hasNext()) {
@@ -270,13 +272,15 @@ public class JSONManager {
             value = reader.nextInt();
          } else if (name.equals("solo")) {
             solo = reader.nextBoolean();
+         } else if (name.equals("active")) {
+            active = reader.nextBoolean();
          } else {
             reader.skipValue();
          }
       }
       reader.endObject();
 
-      return new GameMode(modeName, value, solo);
+      return new GameMode(modeName, value, solo, active);
    }
 
    private static GameRound readGameRound(JsonReader reader) throws IOException {

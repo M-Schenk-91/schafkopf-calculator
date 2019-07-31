@@ -11,17 +11,17 @@ import game.GameMode;
  * Created by Matthias on 20.04.2018.
  */
 
-public class SaveGameUpdater {
+public class SaveGameStructureUpdater {
 
     private static final String ID_GAME_MODE_SOLO_OLD = "Solo/Wenz";
 
-    private static SaveGameUpdater instance;
+    private static SaveGameStructureUpdater instance;
     private ArrayList<GameMode> modes = new ArrayList<>();
 
-    public SaveGameUpdater(){}
+    public SaveGameStructureUpdater(){}
 
-    public static SaveGameUpdater getInstance(){
-        if(instance == null) instance = new SaveGameUpdater();
+    public static SaveGameStructureUpdater getInstance(){
+        if(instance == null) instance = new SaveGameStructureUpdater();
         return instance;
     }
 
@@ -43,14 +43,18 @@ public class SaveGameUpdater {
     private void addNewModes(Game game) {
         for (GameMode mode: modes) {
             boolean alreadyExists = false;
+            boolean isActive = false;
+
             String newModeID = mode.getName();
             ArrayList<GameMode> modesInLoadedGame = game.getSettings().getLstModes();
 
             for (int i = 0; i < modesInLoadedGame.size(); i++) {
-                if (modesInLoadedGame.get(i).getName().equals(newModeID)) alreadyExists = true;
+                if (modesInLoadedGame.get(i).getName().equals(newModeID)){
+                    alreadyExists = true;
+                }
             }
 
-            if (!alreadyExists) game.getSettings().addGameMode(mode);
+            if (!alreadyExists && mode.isActive()) game.getSettings().addGameMode(mode);
         }
     }
 

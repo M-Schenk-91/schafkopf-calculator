@@ -27,7 +27,7 @@ import ui.fragments.dialog.DeleteRoundDialogFragment;
  * Created by Matze on 03.02.2018.
  */
 
-public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.OnLongClickListener {
+public class ScoreListAdapter extends ArrayAdapter<GameRound> {
 
     private final FragmentManager frManager;
     private ArrayList<GameRound> data;
@@ -35,7 +35,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
     private int lastPosition = -1;
     private float TEXT_SIZE_LABEL = 16;
 
-    private static class Holder {
+    private static class ScoreHolder {
         ConstraintLayout layout;
         TextView lblPlayer1;
         TextView lblPlayer2;
@@ -52,28 +52,18 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
     }
 
 
-    @Override
-    public boolean onLongClick(View v) {
-        int position = (Integer) v.getTag();
 
-        DeleteRoundDialogFragment frDeleteRound = new DeleteRoundDialogFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        frDeleteRound.setArguments(bundle);
-        frDeleteRound.show(frManager, "detail");
-        return true;
-    }
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GameRound data = getItem(position);
-        Holder holder;
+        ScoreHolder holder;
         final View result;
+        final int pos = position;
 
         if (convertView == null) {
-            holder = new Holder();
+            holder = new ScoreHolder();
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.list_item_score, parent, false);
 
@@ -87,7 +77,7 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
             result = convertView;
             convertView.setTag(holder);
         } else {
-            holder = (Holder) convertView.getTag();
+            holder = (ScoreHolder) convertView.getTag();
             result = convertView;
         }
 
@@ -125,8 +115,18 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
         holder.lblDetails.setText(data.toString());
         holder.lblDetails.setTextColor(AppColors.getScoreTextColor(0, grayoutText, false, false));
 
-        holder.layout.setOnLongClickListener(this);
-        holder.layout.setTag(position);
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                DeleteRoundDialogFragment frDeleteRound = new DeleteRoundDialogFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", pos);
+                frDeleteRound.setArguments(bundle);
+                frDeleteRound.show(frManager, "detail");
+                return true;
+            }
+        });
         return convertView;
     }
 
@@ -151,6 +151,4 @@ public class ScoreListAdapter extends ArrayAdapter<GameRound> implements View.On
             });
         }
     }
-
-
 }
