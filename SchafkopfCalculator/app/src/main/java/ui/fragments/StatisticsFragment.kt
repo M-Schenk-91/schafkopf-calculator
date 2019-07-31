@@ -121,7 +121,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       })
 */
 
-      chartStatisticsProgress.setDrawGridBackground(false)
+      chartStatisticsProgress.setDrawGridBackground(true)
       chartStatisticsProgress.animateXY(animationMillis, animationMillis)
       chartStatisticsProgress.description.isEnabled = false
       chartStatisticsProgress.setTouchEnabled(false)
@@ -144,7 +144,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsProgress.xAxis.setDrawLabels(false)
       chartStatisticsProgress.xAxis.setDrawAxisLine(false)
 
-      chartStatisticsProgress.axisLeft.setDrawGridLines(false)
+      chartStatisticsProgress.axisLeft.setDrawGridLines(true)
       chartStatisticsProgress.axisLeft.setValueFormatter(formatter)
       //chartStatisticsProgress.axisLeft.setDrawLabels(false)
       //chartStatisticsProgress.axisLeft.setDrawAxisLine(false)
@@ -162,7 +162,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       dataset.setDrawValues(false)
       dataset.setDrawCircles(false)
       dataset.lineWidth = 4f
-      dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+      dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
 
 
    }
@@ -194,7 +194,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
 
       })
 
-      chartStatisticsAverageScores.setDrawGridBackground(false)
+      chartStatisticsAverageScores.setDrawGridBackground(true)
       chartStatisticsAverageScores.animateXY(animationMillis, animationMillis)
       chartStatisticsAverageScores.setNoDataText(context!!.getString(R.string.chart_no_games))
       chartStatisticsAverageScores.legend.isEnabled = false
@@ -214,9 +214,9 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsAverageScores.xAxis.setGranularity(1f)
       chartStatisticsAverageScores.xAxis.setValueFormatter(formatter)
       chartStatisticsAverageScores.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-      chartStatisticsAverageScores.xAxis.setDrawGridLines(false)
+      chartStatisticsAverageScores.xAxis.setDrawGridLines(true)
 
-      chartStatisticsAverageScores.axisLeft.setDrawGridLines(false)
+      chartStatisticsAverageScores.axisLeft.setDrawGridLines(true)
       chartStatisticsAverageScores.axisLeft.setDrawLabels(false)
       chartStatisticsAverageScores.axisLeft.setDrawAxisLine(false)
 
@@ -263,7 +263,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
       chartStatisticsWinningCounts.description.isEnabled = false
       chartStatisticsWinningCounts.setTouchEnabled(false)
       chartStatisticsWinningCounts.setDrawValueAboveBar(true)
-      chartStatisticsWinningCounts.setDrawGridBackground(false)
+      chartStatisticsWinningCounts.setDrawGridBackground(true)
       chartStatisticsWinningCounts.animateXY(animationMillis, animationMillis)
 
       val formatter = object : IAxisValueFormatter {
@@ -277,7 +277,7 @@ class StatisticsFragment : SchafkopfFragment(), IStatisticsListener {
 
       chartStatisticsWinningCounts.xAxis.setGranularity(1f)
       chartStatisticsWinningCounts.xAxis.setValueFormatter(formatter)
-      chartStatisticsWinningCounts.xAxis.setDrawGridLines(false)
+      chartStatisticsWinningCounts.xAxis.setDrawGridLines(true)
       chartStatisticsWinningCounts.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
       chartStatisticsWinningCounts.getAxisLeft().setAxisMinimum(0.toFloat())
 

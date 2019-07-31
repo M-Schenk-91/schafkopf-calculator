@@ -73,12 +73,13 @@ public class ChooseWinnerFragment extends Fragment {
             lstTogglesWinner.get(i).setText(activeGame.getLstPlayers().get(i).getName());
             lstTogglesWinner.get(i).setTextOff(activeGame.getLstPlayers().get(i).getName());
             lstTogglesWinner.get(i).setTextOn(activeGame.getLstPlayers().get(i).getName());
-
+            /*
             GradientDrawable shape =  new GradientDrawable();
             shape.setCornerRadius( 16 );
             shape.setColor(AppColors.PLAYER_COLORS[i]);
 
             lstTogglesWinner.get(i).setBackground(shape);
+            */
         }
     }
 
